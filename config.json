@@ -20,8 +20,8 @@
       "title": "Radhika & Roshan",
       "kicker": "15 January 2027 · Kshana by the Sea",
       "line": "Aapke phone me jo tasveerein hain, wo humare paas bhi honi chahiye.",
-      "endpoint": "PASTE_APPS_SCRIPT_EXEC_URL_HERE",
-      "secret": "PASTE_THE_SAME_SECRET_HERE",
+      "endpoint": "https://script.google.com/macros/s/AKfycby7H25vOvpPqaKuxEjNnjg41Mfd1fUcQo2lazwdi2TLMGFSGcDe99yjGODEQPZsCXwM/exec",
+      "secret": "radhikaroshan",
       "maxPhotos": 20
     }
   }
