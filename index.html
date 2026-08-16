@@ -1,0 +1,597 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="only light">
+<meta name="robots" content="noindex, nofollow">
+<title>Apni photos bhejiye</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23101d3a'/%3E%3Ccircle cx='16' cy='17' r='6.5' fill='none' stroke='%23e0b25e' stroke-width='2.2'/%3E%3Ccircle cx='16' cy='17' r='2.2' fill='%23e0b25e'/%3E%3Cpath d='M9 9h5l1.5-2h1L18 9h5' fill='none' stroke='%23e0b25e' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E">
+
+<style>
+/* ───────────────────────────────────────────────────────────────────────────
+   Rang invite ke apne hain: raat wali navy, aur lanterns ka sona. Page usi
+   duniya ka hissa lagna chahiye jisme guest abhi shaadi ka card dekh ke aaya
+   hai — alag se banaya hua form nahi.
+
+   Ek hi look, jaan-boojh kar. Har rang yahan likha hua hai, isliye phone ka
+   dark mode ise ulta nahi kar sakta.
+   ─────────────────────────────────────────────────────────────────────────── */
+:root{
+  --navy:#0d1730; --navy-2:#152341; --navy-3:#1d2f55;
+  --gold:#e0b25e; --gold-hi:#f4d79a; --gold-dim:#a8823c;
+  --cream:#f6ecd8; --cream-2:#e6d7ba;
+  --leaf:#7fb08a; --rose:#d97a7a;
+  --ring:rgba(224,178,94,.34);
+  --shadow:0 18px 44px rgba(0,0,0,.45);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--navy);
+  color:var(--cream);
+  font-family:ui-rounded,"Segoe UI",Nunito,"Trebuchet MS",system-ui,sans-serif;
+  -webkit-text-size-adjust:100%;
+  /* Halki si bunai, taaki saada navy plastic jaisa na lage */
+  background-image:
+    radial-gradient(circle at 12% 8%, rgba(224,178,94,.075), transparent 42%),
+    radial-gradient(circle at 88% 82%, rgba(224,178,94,.055), transparent 46%);
+  background-attachment:fixed;
+  min-height:100dvh;
+}
+.wrap{max-width:660px;margin:0 auto;padding:0 16px 140px}
+
+/* ── sarnama ─────────────────────────────────────────────────────────────── */
+.banner{
+  display:block;width:100%;height:auto;border-radius:0 0 26px 26px;
+  box-shadow:var(--shadow);
+  /* Phone pe apne aap me poori chaudai le, par kabhi itni jagah na khaye ki
+     naam wala khaana pehli nazar me hi na dikhe. Chaudi screen pe ye ek patti
+     ban jaati hai, poori deewar nahi. */
+  max-height:min(46vh,340px);object-fit:cover;object-position:center 42%;
+}
+.head{text-align:center;padding:22px 6px 4px}
+.kicker{
+  font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;
+  color:var(--gold);opacity:.9;margin:0 0 8px
+}
+h1{
+  margin:0 0 10px;font-size:clamp(1.9rem,7.4vw,2.6rem);line-height:1.12;
+  font-family:Georgia,"Times New Roman",serif;font-weight:700;color:var(--cream);
+}
+.line{margin:0 auto;max-width:34ch;font-size:1rem;line-height:1.6;color:var(--cream-2)}
+
+/* ── kaagaz ke tukde ─────────────────────────────────────────────────────── */
+.card{
+  background:var(--navy-2);
+  border:1.5px solid rgba(224,178,94,.28);
+  border-radius:22px;padding:18px 16px;margin:18px 0;
+  box-shadow:0 10px 26px rgba(0,0,0,.3);
+  position:relative;
+}
+.card::before{
+  /* kone ka chhota sa gota */
+  content:"";position:absolute;inset:6px;border-radius:16px;
+  border:1px dashed rgba(224,178,94,.2);pointer-events:none;
+}
+.step{
+  display:inline-flex;align-items:center;gap:9px;margin:0 0 14px;
+  font-size:.74rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)
+}
+.step b{
+  width:26px;height:26px;border-radius:50%;display:grid;place-items:center;
+  background:var(--gold);color:var(--navy);font-size:.86rem;letter-spacing:0
+}
+label{display:block;font-size:.86rem;margin:0 0 6px;color:var(--cream-2)}
+input[type=text],input[type=tel]{
+  width:100%;padding:14px 15px;border-radius:14px;
+  border:1.5px solid rgba(224,178,94,.3);
+  background:var(--navy-3);color:var(--cream);
+  /* 16px se chhota rakha to iPhone focus pe poora page zoom kar deta hai */
+  font-size:16px;font-family:inherit;
+}
+input::placeholder{color:rgba(246,236,216,.4)}
+input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 4px var(--ring)}
+.row{display:grid;gap:13px}
+@media(min-width:520px){.row.two{grid-template-columns:1fr 1fr}}
+
+/* ── buttons ─────────────────────────────────────────────────────────────── */
+.btn{
+  -webkit-appearance:none;appearance:none;border:0;cursor:pointer;
+  font-family:inherit;font-size:1.02rem;font-weight:700;
+  padding:16px 22px;border-radius:16px;width:100%;
+  background:linear-gradient(180deg,var(--gold-hi),var(--gold));
+  color:#3a2a0d;box-shadow:0 6px 0 var(--gold-dim);
+  transition:transform .09s ease, box-shadow .09s ease, filter .15s ease;
+}
+.btn:active{transform:translateY(4px);box-shadow:0 2px 0 var(--gold-dim)}
+.btn[disabled]{filter:grayscale(.65) brightness(.7);cursor:not-allowed;box-shadow:0 6px 0 rgba(0,0,0,.3)}
+.btn.ghost{
+  background:transparent;color:var(--gold);
+  border:1.5px dashed rgba(224,178,94,.5);box-shadow:none;font-weight:600
+}
+.btn.ghost:active{transform:none}
+
+/* ── photo chunne ka darwaza ─────────────────────────────────────────────── */
+.drop{
+  border:2px dashed rgba(224,178,94,.45);border-radius:20px;
+  padding:26px 16px;text-align:center;background:rgba(29,47,85,.5);
+  transition:background .15s ease,border-color .15s ease;
+}
+.drop.hot{background:rgba(224,178,94,.13);border-color:var(--gold)}
+.drop .big{font-size:2.1rem;line-height:1;margin-bottom:10px}
+.drop p{margin:0 0 14px;color:var(--cream-2);font-size:.94rem}
+.count{font-size:.8rem;color:var(--gold);margin-top:10px}
+
+/* ── photos ki lari ──────────────────────────────────────────────────────── */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:12px;margin-top:16px}
+.pic{
+  position:relative;aspect-ratio:1;border-radius:15px;overflow:hidden;
+  background:var(--navy-3);border:1.5px solid rgba(224,178,94,.3);
+  /* Halka sa tirchapan — scrapbook jaisa, chipkaaya hua */
+  transform:rotate(var(--tilt,0deg));
+  box-shadow:0 6px 14px rgba(0,0,0,.34);
+}
+.pic img{width:100%;height:100%;object-fit:cover;display:block}
+.pic .veil{
+  position:absolute;inset:0;background:rgba(13,23,48,.62);
+  display:grid;place-items:center;transition:opacity .4s ease
+}
+.pic.done .veil{opacity:0}
+.pic .pct{font-size:.82rem;font-weight:700;color:var(--gold-hi)}
+.pic .bar{position:absolute;left:0;right:0;bottom:0;height:4px;background:rgba(0,0,0,.4)}
+.pic .bar i{display:block;height:100%;width:0;background:var(--gold);transition:width .25s ease}
+.pic .tick{
+  position:absolute;top:7px;right:7px;width:24px;height:24px;border-radius:50%;
+  background:var(--leaf);display:grid;place-items:center;color:#0d1730;
+  font-size:.85rem;font-weight:800;opacity:0;transform:scale(.4);
+  transition:opacity .3s ease,transform .3s cubic-bezier(.2,1.6,.4,1)
+}
+.pic.done .tick{opacity:1;transform:scale(1)}
+.pic.bad{border-color:var(--rose)}
+.pic.bad .veil{background:rgba(120,30,30,.66);opacity:1}
+.pic .x{
+  position:absolute;top:7px;left:7px;width:24px;height:24px;border-radius:50%;
+  background:rgba(13,23,48,.82);border:1px solid rgba(224,178,94,.5);
+  color:var(--cream);font-size:.9rem;line-height:1;cursor:pointer;
+  display:grid;place-items:center;padding:0
+}
+.pic.done .x,.pic.busy .x{display:none}
+
+/* ── neeche chipka hua button ────────────────────────────────────────────── */
+.dock{
+  position:fixed;left:0;right:0;bottom:0;z-index:20;
+  padding:12px 16px calc(12px + env(safe-area-inset-bottom));
+  background:linear-gradient(to top,var(--navy) 62%,rgba(13,23,48,0));
+}
+.dock .inner{max-width:660px;margin:0 auto}
+
+.note{font-size:.82rem;color:rgba(246,236,216,.62);text-align:center;margin:12px 0 0;line-height:1.55}
+.err{
+  background:rgba(217,122,122,.14);border:1.5px solid var(--rose);
+  color:#ffd9d9;border-radius:14px;padding:12px 14px;margin:14px 0;font-size:.92rem
+}
+.hide{display:none !important}
+
+/* ── ho gaya ─────────────────────────────────────────────────────────────── */
+.done-wrap{text-align:center;padding:26px 10px}
+.done-wrap .seal{
+  width:96px;height:96px;margin:0 auto 18px;border-radius:50%;
+  background:linear-gradient(180deg,var(--gold-hi),var(--gold));
+  display:grid;place-items:center;font-size:2.6rem;color:var(--navy);
+  box-shadow:0 10px 26px rgba(224,178,94,.32);
+  animation:pop .5s cubic-bezier(.2,1.6,.4,1)
+}
+@keyframes pop{from{transform:scale(.3);opacity:0}to{transform:scale(1);opacity:1}}
+.done-wrap h2{font-family:Georgia,serif;font-size:1.9rem;margin:0 0 10px}
+</style>
+</head>
+<body>
+
+<picture>
+  <source srcset="assets/banner.avif" type="image/avif">
+  <img class="banner" src="assets/banner.webp" alt="" width="1400" height="700" fetchpriority="high">
+</picture>
+
+<div class="wrap">
+
+  <div class="head">
+    <p class="kicker" id="kicker">&nbsp;</p>
+    <h1 id="title">&nbsp;</h1>
+    <p class="line" id="line">&nbsp;</p>
+  </div>
+
+  <div id="fatal" class="err hide"></div>
+
+  <!-- ── kaun ho aap ───────────────────────────────────────────────────── -->
+  <section class="card" id="who">
+    <p class="step"><b>1</b> Pehle apna parichay</p>
+    <div class="row two">
+      <div>
+        <label for="g-name">Aapka naam</label>
+        <input id="g-name" type="text" autocomplete="name" placeholder="Jaise: Ankit Sharma" maxlength="60">
+      </div>
+      <div>
+        <label for="g-phone">Phone number</label>
+        <input id="g-phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="98765 43210" maxlength="20">
+      </div>
+    </div>
+    <div style="margin-top:13px">
+      <label for="g-code">Passcode <span style="opacity:.6">(card pe likha hai)</span></label>
+      <input id="g-code" type="text" autocomplete="off" placeholder="••••••" maxlength="40">
+    </div>
+  </section>
+
+  <!-- ── photos ────────────────────────────────────────────────────────── -->
+  <section class="card" id="pickCard">
+    <p class="step"><b>2</b> Ab photos chuniye</p>
+
+    <div class="drop" id="drop">
+      <div class="big">📷</div>
+      <p id="dropMsg">Naam aur number bhar dijiye, phir yahan se photos chun sakte hain.</p>
+      <button class="btn ghost" id="pickBtn" disabled>Photos chuniye</button>
+      <p class="count" id="count"></p>
+    </div>
+
+    <input id="file" type="file" accept="image/*" multiple class="hide">
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <p class="note" id="foot">Aapki photos seedha parivaar ke apne album me jaati hain.</p>
+</div>
+
+<!-- ── neeche ka button ────────────────────────────────────────────────── -->
+<div class="dock" id="dock">
+  <div class="inner">
+    <button class="btn" id="send" disabled>Photos chuniye</button>
+  </div>
+</div>
+
+<!-- ── ho gaya ─────────────────────────────────────────────────────────── -->
+<div class="wrap hide" id="thanks">
+  <div class="done-wrap">
+    <div class="seal">✓</div>
+    <h2>Pahunch gayin!</h2>
+    <p class="line" id="thanksLine"></p>
+    <div style="margin-top:22px">
+      <button class="btn ghost" id="again">Aur photos bhejni hain</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════════════════
+   Guest ka page.
+
+   Do baatein jo poore design ko tay karti hain:
+
+   1. PHOTO KABHI KISI SERVER SE HOKAR NAHI JAATI. Apps Script sirf Google se
+      "resumable session" ka pata leta hai; bytes phone se SEEDHE Drive pe
+      jaate hain. Isliye 30 MB ki photo bhi theek hai aur 4G kat jaye to upload
+      wahin se uthta hai, shuru se nahi.
+
+   2. PREVIEW GUEST KI APNI FILE SE BANTA HAI (createObjectURL). Kahin se
+      download nahi hota — turant dikhta hai, ek byte data kharch nahi hota,
+      aur page ke andar kisi remote link ka naam-o-nishan nahi hota.
+   ═══════════════════════════════════════════════════════════════════════════ */
+(function () {
+  'use strict';
+
+  var CONCURRENCY = 3;      // ek saath itni photos. Zyada rakho to har ek dheemi.
+  var RETRIES = 3;
+
+  var cfg = null, items = [], busy = false;
+
+  var $ = function (id) { return document.getElementById(id); };
+  var nameEl = $('g-name'), phoneEl = $('g-phone'), codeEl = $('g-code');
+
+  /* ── config ───────────────────────────────────────────────────────────── */
+  fetch('config.json', { cache: 'no-store' })
+    .then(function (r) { return r.json(); })
+    .then(function (all) {
+      var slug = new URLSearchParams(location.search).get('e') || all.default;
+      cfg = (all.events || {})[slug];
+      if (!cfg) throw new Error('Ye link kis shaadi ka hai, wo pata nahi chala.');
+      if (/^PASTE_/.test(cfg.endpoint || '')) throw new Error('Ye link abhi taiyaar nahi hai.');
+      $('kicker').textContent = cfg.kicker || '';
+      $('title').textContent = cfg.title || '';
+      $('line').textContent = cfg.line || '';
+      document.title = (cfg.title || 'Photos') + ' — apni photos bhejiye';
+      $('count').textContent = 'Ek baar me ' + max() + ' tak';
+    })
+    .catch(function (e) { fatal(e.message || String(e)); });
+
+  function max() { return (cfg && cfg.maxPhotos) || 20; }
+
+  function fatal(msg) {
+    var f = $('fatal'); f.textContent = msg; f.classList.remove('hide');
+    $('dock').classList.add('hide');
+    // Config na mile to sarnama `&nbsp;` par atka reh jaata hai — banner ke
+    // neeche ek khaali khaai, aur guest ko lagta hai page toota hua hai.
+    if (!$('title').textContent.trim()) {
+      $('kicker').textContent = 'Invifest';
+      $('title').textContent = 'Photo album';
+      $('line').textContent = '';
+      $('who').classList.add('hide');
+      $('pickCard').classList.add('hide');
+      $('foot').classList.add('hide');
+    }
+  }
+
+  /* ── Apps Script se baat ──────────────────────────────────────────────── */
+  // text/plain jaan-boojh kar: ye "simple request" hai, isliye browser pehle
+  // OPTIONS nahi bhejta — aur Apps Script OPTIONS ka jawab de hi nahi sakta.
+  function ask(op, extra) {
+    var body = Object.assign({ op: op, secret: cfg.secret, origin: location.origin }, extra || {});
+    return fetch(cfg.endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(body)
+    }).then(function (r) { return r.json(); });
+  }
+
+  /* ── form ─────────────────────────────────────────────────────────────── */
+  function whoOk() {
+    return nameEl.value.trim().length >= 2 &&
+           /^[0-9+\-\s()]{7,20}$/.test(phoneEl.value.trim());
+  }
+  function refresh() {
+    var ok = whoOk() && !!cfg;
+    $('pickBtn').disabled = !ok;
+    $('dropMsg').textContent = ok
+      ? 'Jitni bhejni hain chun lijiye — ek saath ' + max() + ' tak.'
+      : 'Naam aur number bhar dijiye, phir yahan se photos chun sakte hain.';
+
+    var pending = items.filter(function (it) { return !it.done; }).length;
+    var send = $('send');
+    if (busy) { send.disabled = true; send.textContent = 'Bheja jaa raha hai…'; return; }
+    send.disabled = !(ok && pending > 0);
+    send.textContent = pending > 0
+      ? (pending === items.length ? 'Bhej dijiye (' + pending + ')' : 'Baaki ' + pending + ' bhejiye')
+      : (items.length ? 'Sab bhej diya' : 'Photos chuniye');
+  }
+  [nameEl, phoneEl, codeEl].forEach(function (el) { el.addEventListener('input', refresh); });
+
+  /* ── photos chunna ────────────────────────────────────────────────────── */
+  $('pickBtn').addEventListener('click', function () { $('file').click(); });
+  $('file').addEventListener('change', function (e) { add(e.target.files); e.target.value = ''; });
+
+  var drop = $('drop');
+  ['dragenter', 'dragover'].forEach(function (t) {
+    drop.addEventListener(t, function (e) { e.preventDefault(); drop.classList.add('hot'); });
+  });
+  ['dragleave', 'drop'].forEach(function (t) {
+    drop.addEventListener(t, function (e) { e.preventDefault(); drop.classList.remove('hot'); });
+  });
+  drop.addEventListener('drop', function (e) {
+    if (whoOk() && e.dataTransfer) add(e.dataTransfer.files);
+  });
+
+  function add(fileList) {
+    var room = max() - items.length;
+    var picked = Array.prototype.slice.call(fileList)
+      .filter(function (f) { return /^image\//.test(f.type); });
+    if (room <= 0) { $('count').textContent = 'Ek baar me ' + max() + ' tak hi.'; return; }
+
+    picked.slice(0, room).forEach(function (f) {
+      items.push({ file: f, url: URL.createObjectURL(f), done: false, pct: 0, order: items.length + 1 });
+    });
+    if (picked.length > room) {
+      $('count').textContent = 'Pehli ' + room + ' li gayin — ek baar me ' + max() + ' tak.';
+    } else {
+      $('count').textContent = items.length + ' / ' + max() + ' chuni gayin';
+    }
+    render(); refresh();
+  }
+
+  function render() {
+    var g = $('grid');
+    g.textContent = '';
+    items.forEach(function (it, i) {
+      var d = document.createElement('div');
+      d.className = 'pic' + (it.done ? ' done' : '') + (it.bad ? ' bad' : '') + (it.busy ? ' busy' : '');
+      // Har card thoda alag jhuka hua, par tay hisaab se — har render pe
+      // hilta rahe to nasha chadh jaata hai.
+      d.style.setProperty('--tilt', ((i % 5) - 2) * 0.9 + 'deg');
+
+      var img = document.createElement('img');
+      img.src = it.url; img.alt = ''; img.loading = 'lazy';
+      d.appendChild(img);
+
+      var veil = document.createElement('div'); veil.className = 'veil';
+      var pct = document.createElement('span'); pct.className = 'pct';
+      pct.textContent = it.bad ? 'Nahi gayi' : (it.busy ? it.pct + '%' : '');
+      veil.appendChild(pct); d.appendChild(veil);
+
+      var bar = document.createElement('div'); bar.className = 'bar';
+      var fill = document.createElement('i'); fill.style.width = it.pct + '%';
+      bar.appendChild(fill); d.appendChild(bar);
+
+      var tick = document.createElement('div'); tick.className = 'tick'; tick.textContent = '✓';
+      d.appendChild(tick);
+
+      if (!it.done && !it.busy && !busy) {
+        var x = document.createElement('button');
+        x.className = 'x'; x.type = 'button'; x.textContent = '×';
+        x.setAttribute('aria-label', 'Ye photo hata dijiye');
+        x.addEventListener('click', function () {
+          URL.revokeObjectURL(it.url);
+          items.splice(i, 1);
+          items.forEach(function (t, k) { t.order = k + 1; });
+          $('count').textContent = items.length + ' / ' + max() + ' chuni gayin';
+          render(); refresh();
+        });
+        d.appendChild(x);
+      }
+      g.appendChild(d);
+    });
+  }
+
+  function paint(it) {
+    var cards = $('grid').children, i = items.indexOf(it);
+    if (i < 0 || !cards[i]) return;
+    var c = cards[i];
+    c.className = 'pic' + (it.done ? ' done' : '') + (it.bad ? ' bad' : '') + (it.busy ? ' busy' : '');
+    var f = c.querySelector('.bar i'); if (f) f.style.width = it.pct + '%';
+    var p = c.querySelector('.pct');
+    if (p) p.textContent = it.bad ? 'Nahi gayi' : (it.done ? '' : it.pct + '%');
+  }
+
+  /* ── ek file, seedha Google pe ────────────────────────────────────────── */
+  /*
+     XHR, fetch nahi — do wajah se: fetch upload ka progress batata hi nahi,
+     aur resumable ka 308 fetch ke liye ek redirect hai jise wo khud follow
+     karne lagta hai.
+  */
+  function put(url, file, from, onPct) {
+    return new Promise(function (resolve, reject) {
+      var x = new XMLHttpRequest();
+      x.open('PUT', url, true);
+      var body = file;
+      if (from > 0) {
+        body = file.slice(from);
+        x.setRequestHeader('Content-Range',
+          'bytes ' + from + '-' + (file.size - 1) + '/' + file.size);
+      }
+      x.upload.onprogress = function (e) {
+        if (e.lengthComputable) onPct(Math.round(((from + e.loaded) / file.size) * 100));
+      };
+      x.onload = function () {
+        if (x.status === 200 || x.status === 201) {
+          try { resolve(JSON.parse(x.responseText)); }
+          catch (err) { resolve({}); }
+        } else reject(new Error('HTTP ' + x.status));
+      };
+      x.onerror = function () { reject(new Error('network')); };
+      x.ontimeout = function () { reject(new Error('timeout')); };
+      x.send(body);
+    });
+  }
+
+  /* Google se poochho ki uske paas ab tak kitna pahuncha — wahin se aage. */
+  function howFar(url, size) {
+    return new Promise(function (resolve) {
+      var x = new XMLHttpRequest();
+      x.open('PUT', url, true);
+      x.setRequestHeader('Content-Range', 'bytes */' + size);
+      x.onload = x.onerror = function () {
+        var r = x.getResponseHeader('Range');   // "bytes=0-262143"
+        var m = r && r.match(/-(\d+)$/);
+        resolve(m ? Number(m[1]) + 1 : 0);
+      };
+      x.send();
+    });
+  }
+
+  function upload(it) {
+    it.busy = true; paint(it);
+    var from = 0, tries = 0;
+
+    function go() {
+      return put(it.slot.url, it.file, from, function (p) { it.pct = p; paint(it); })
+        .then(function (res) {
+          it.busy = false; it.done = true; it.pct = 100; it.id = res.id; paint(it);
+        })
+        .catch(function (err) {
+          tries++;
+          if (tries >= RETRIES) {
+            it.busy = false; it.bad = true; it.err = err.message; paint(it);
+            return;
+          }
+          // Girne ke baad shuru se nahi — jahan chhoda tha wahin se.
+          return howFar(it.slot.url, it.file.size).then(function (got) {
+            from = got; it.pct = Math.round((got / it.file.size) * 100); paint(it);
+            return new Promise(function (r) { setTimeout(r, 700 * tries); }).then(go);
+          });
+        });
+    }
+    return go();
+  }
+
+  /* ── bhejo ────────────────────────────────────────────────────────────── */
+  $('send').addEventListener('click', function () {
+    if (busy) return;
+    var todo = items.filter(function (it) { return !it.done; });
+    if (!todo.length || !whoOk()) return;
+
+    busy = true; refresh(); render();
+    $('fatal').classList.add('hide');
+
+    ask('slots', {
+      guestName: nameEl.value.trim(),
+      guestPhone: phoneEl.value.trim(),
+      passcode: codeEl.value.trim(),
+      files: todo.map(function (it) {
+        return { name: it.file.name, size: it.file.size, mime: it.file.type };
+      })
+    }).then(function (res) {
+      if (!res || !res.ok) throw new Error((res && res.error) || 'Abhi nahi ho paaya.');
+
+      todo.forEach(function (it, i) { it.slot = res.slots[i]; });
+      var bad = todo.filter(function (it) { return !it.slot || !it.slot.url; });
+      bad.forEach(function (it) { it.bad = true; it.err = (it.slot && it.slot.error) || 'slot nahi mila'; paint(it); });
+
+      var queue = todo.filter(function (it) { return it.slot && it.slot.url; });
+      var next = 0;
+      function worker() {
+        if (next >= queue.length) return Promise.resolve();
+        var it = queue[next++];
+        return upload(it).then(worker);
+      }
+      var lanes = [];
+      for (var i = 0; i < Math.min(CONCURRENCY, queue.length); i++) lanes.push(worker());
+      return Promise.all(lanes);
+    }).then(function () {
+      var ok = items.filter(function (it) { return it.done && it.id; });
+      if (!ok.length) throw new Error('Ek bhi photo nahi ja paayi. Network dekh ke phir se try kijiye.');
+      return ask('done', {
+        guestName: nameEl.value.trim(),
+        guestPhone: phoneEl.value.trim(),
+        uploaded: ok.map(function (it) {
+          return { id: it.id, name: it.slot.name, order: it.order };
+        })
+      }).then(function () { return ok.length; });
+    }).then(function (n) {
+      busy = false;
+      var failed = items.filter(function (it) { return it.bad; }).length;
+      if (failed) { refresh(); render(); fatalSoft(failed); return; }
+      celebrate(n);
+    }).catch(function (e) {
+      busy = false; refresh(); render();
+      fatal(e.message || String(e));
+    });
+  });
+
+  function fatalSoft(n) {
+    var f = $('fatal');
+    f.textContent = n + ' photo nahi ja paayi. Neeche wala button dabaiye, sirf wahi dobara jayengi.';
+    f.classList.remove('hide');
+  }
+
+  function celebrate(n) {
+    items.forEach(function (it) { URL.revokeObjectURL(it.url); });
+    document.querySelector('.wrap').classList.add('hide');
+    $('dock').classList.add('hide');
+    $('thanks').classList.remove('hide');
+    $('thanksLine').textContent =
+      n + (n === 1 ? ' photo' : ' photos') + ' pahunch gayin. Bahut bahut shukriya!';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  $('again').addEventListener('click', function () {
+    items = [];
+    $('grid').textContent = '';
+    $('count').textContent = 'Ek baar me ' + max() + ' tak';
+    $('thanks').classList.add('hide');
+    document.querySelector('.wrap').classList.remove('hide');
+    $('dock').classList.remove('hide');
+    $('fatal').classList.add('hide');
+    refresh();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  refresh();
+})();
+</script>
+</body>
+</html>

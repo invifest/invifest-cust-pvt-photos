@@ -1,0 +1,28 @@
+{
+  "_readme": [
+    "Har customer ka apna block. Page ?e=<slug> se chunta hai; kuch na ho to",
+    "`default` wala chalta hai.",
+    "",
+    "Google account badalna ho to bas `endpoint` (aur `secret`) badlo — naye",
+    "account me wahi Code.gs deploy karo, naya /exec URL yahan daal do. Kuch",
+    "transfer nahi karna, koi folder share nahi karna, aur guest ka link wahi",
+    "ka wahi rehta hai.",
+    "",
+    "PASSCODE yahan NAHI hai — wo Apps Script ki Script Properties me rehta hai",
+    "aur server pe check hota hai. Yahan rakhte to page ka source kholte hi",
+    "dikh jaata, aur wo koi darwaza na hota."
+  ],
+
+  "default": "radhika-roshan",
+
+  "events": {
+    "radhika-roshan": {
+      "title": "Radhika & Roshan",
+      "kicker": "15 January 2027 · Kshana by the Sea",
+      "line": "Aapke phone me jo tasveerein hain, wo humare paas bhi honi chahiye.",
+      "endpoint": "PASTE_APPS_SCRIPT_EXEC_URL_HERE",
+      "secret": "PASTE_THE_SAME_SECRET_HERE",
+      "maxPhotos": 20
+    }
+  }
+}
