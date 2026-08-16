@@ -3,590 +3,776 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="color-scheme" content="only light">
+<meta name="color-scheme" content="light dark">
 <meta name="robots" content="noindex, nofollow">
-<title>Apni photos bhejiye</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23101d3a'/%3E%3Ccircle cx='16' cy='17' r='6.5' fill='none' stroke='%23e0b25e' stroke-width='2.2'/%3E%3Ccircle cx='16' cy='17' r='2.2' fill='%23e0b25e'/%3E%3Cpath d='M9 9h5l1.5-2h1L18 9h5' fill='none' stroke='%23e0b25e' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E">
+<title>Send your photos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230F1B33'/%3E%3Cg fill='none' stroke='%23E0B25E' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' transform='translate(4 4) scale(1)'%3E%3Cpath d='M8.5 3h7l1.5 2.5H21a2 2 0 0 1 2 2V19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V7.5a2 2 0 0 1 2-2h4z'/%3E%3Ccircle cx='12' cy='13' r='3.5'/%3E%3C/g%3E%3C/svg%3E">
 
 <style>
-/* ───────────────────────────────────────────────────────────────────────────
-   Rang invite ke apne hain: raat wali navy, aur lanterns ka sona. Page usi
-   duniya ka hissa lagna chahiye jisme guest abhi shaadi ka card dekh ke aaya
-   hai — alag se banaya hua form nahi.
+/* ═══════════════════════════════════════════════════════════════════════════
+   Guest photo vault
 
-   Ek hi look, jaan-boojh kar. Har rang yahan likha hua hai, isliye phone ka
-   dark mode ise ulta nahi kar sakta.
-   ─────────────────────────────────────────────────────────────────────────── */
+   The banner sets the terms: Indian folk-art line work, ink-navy ground, gold
+   pulled from lantern light. Everything below is built from that same palette
+   rather than a generic form dropped underneath a nice picture.
+
+   THE ONE IDEA: a photo DEVELOPS. Every picture lands as a dark, colourless
+   negative and comes into full colour as it uploads, with a thin gold line
+   sweeping down it. Nobody has to read a percentage to know what is happening -
+   the picture itself is the progress bar, and a finished photo simply looks
+   like a photo. Numbers are still there for the people who want them.
+
+   Everything else stays quiet so that one idea reads.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
 :root{
-  --navy:#0d1730; --navy-2:#152341; --navy-3:#1d2f55;
-  --gold:#e0b25e; --gold-hi:#f4d79a; --gold-dim:#a8823c;
-  --cream:#f6ecd8; --cream-2:#e6d7ba;
-  --leaf:#7fb08a; --rose:#d97a7a;
-  --ring:rgba(224,178,94,.34);
-  --shadow:0 18px 44px rgba(0,0,0,.45);
+  color-scheme:light;
+  --paper:#F1E8D7; --paper-2:#E7DBC4;
+  --card:#FFFCF5;
+  --ink:#0F1B33; --ink-soft:#4A5568; --ink-faint:#8A8272;
+  --gold:#8A6014; --gold-lit:#C7952F; --gold-wash:rgba(199,149,47,.13);
+  --line:rgba(15,27,51,.16);
+  --good:#2F6B4A; --good-wash:rgba(47,107,74,.11);
+  --bad:#A8332F;  --bad-wash:rgba(168,51,47,.09);
+  --shadow:0 2px 3px rgba(15,27,51,.05), 0 10px 24px -12px rgba(15,27,51,.25);
+  --lift:0 4px 0 var(--ink);
+  --r:18px;
 }
+html[data-theme="dark"]{
+  color-scheme:dark;
+  --paper:#080F1E; --paper-2:#0D1729;
+  --card:#111D34;
+  --ink:#F3E9D6; --ink-soft:#B9C3D4; --ink-faint:#7C8699;
+  --gold:#E0B25E; --gold-lit:#F2D293; --gold-wash:rgba(224,178,94,.14);
+  --line:rgba(224,178,94,.22);
+  --good:#79C79B; --good-wash:rgba(121,199,155,.13);
+  --bad:#F08A86;  --bad-wash:rgba(240,138,134,.12);
+  --shadow:0 2px 3px rgba(0,0,0,.3), 0 14px 30px -14px rgba(0,0,0,.7);
+  --lift:0 4px 0 rgba(0,0,0,.55);
+}
+
 *{box-sizing:border-box}
 html,body{margin:0;padding:0}
 body{
-  background:var(--navy);
-  color:var(--cream);
-  font-family:ui-rounded,"Segoe UI",Nunito,"Trebuchet MS",system-ui,sans-serif;
-  -webkit-text-size-adjust:100%;
-  /* Halki si bunai, taaki saada navy plastic jaisa na lage */
-  background-image:
-    radial-gradient(circle at 12% 8%, rgba(224,178,94,.075), transparent 42%),
-    radial-gradient(circle at 88% 82%, rgba(224,178,94,.055), transparent 46%);
-  background-attachment:fixed;
+  background:var(--paper);color:var(--ink);
+  font-family:Karla,system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-size:16px;line-height:1.55;
+  -webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent;
   min-height:100dvh;
 }
-.wrap{max-width:660px;margin:0 auto;padding:0 16px 140px}
+.wrap{max-width:600px;margin:0 auto;padding:0 18px 190px}
+.icon{width:1em;height:1em;display:inline-block;vertical-align:-.13em;flex:none;
+  stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 
-/* ── sarnama ─────────────────────────────────────────────────────────────── */
-.banner{
-  display:block;width:100%;height:auto;border-radius:0 0 26px 26px;
-  box-shadow:var(--shadow);
-  /* Phone pe apne aap me poori chaudai le, par kabhi itni jagah na khaye ki
-     naam wala khaana pehli nazar me hi na dikhe. Chaudi screen pe ye ek patti
-     ban jaati hai, poori deewar nahi. */
-  max-height:min(46vh,340px);object-fit:cover;object-position:center 42%;
-}
-.head{text-align:center;padding:22px 6px 4px}
-.kicker{
-  font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;
-  color:var(--gold);opacity:.9;margin:0 0 8px
-}
-h1{
-  margin:0 0 10px;font-size:clamp(1.9rem,7.4vw,2.6rem);line-height:1.12;
-  font-family:Georgia,"Times New Roman",serif;font-weight:700;color:var(--cream);
-}
-.line{margin:0 auto;max-width:34ch;font-size:1rem;line-height:1.6;color:var(--cream-2)}
+/* ── banner ──────────────────────────────────────────────────────────────── */
+.banner-wrap{position:relative;overflow:hidden}
+.banner{display:block;width:100%;height:auto;max-height:min(40vh,300px);
+  object-fit:cover;object-position:center 44%}
+/* Artwork melts into the page instead of ending on a hard seam. */
+.banner-wrap::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:38%;
+  background:linear-gradient(to bottom,transparent,var(--paper));pointer-events:none}
 
-/* ── kaagaz ke tukde ─────────────────────────────────────────────────────── */
-.card{
-  background:var(--navy-2);
-  border:1.5px solid rgba(224,178,94,.28);
-  border-radius:22px;padding:18px 16px;margin:18px 0;
-  box-shadow:0 10px 26px rgba(0,0,0,.3);
-  position:relative;
+/* ── masthead ────────────────────────────────────────────────────────────── */
+.top{display:flex;justify-content:flex-end;padding:14px 18px 0;max-width:600px;margin:0 auto}
+.themer{
+  display:grid;place-items:center;width:40px;height:40px;border-radius:50%;
+  border:1.5px solid var(--line);background:var(--card);color:var(--ink);
+  cursor:pointer;font-size:17px;transition:transform .18s,border-color .18s;
 }
-.card::before{
-  /* kone ka chhota sa gota */
-  content:"";position:absolute;inset:6px;border-radius:16px;
-  border:1px dashed rgba(224,178,94,.2);pointer-events:none;
-}
-.step{
-  display:inline-flex;align-items:center;gap:9px;margin:0 0 14px;
-  font-size:.74rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)
-}
-.step b{
-  width:26px;height:26px;border-radius:50%;display:grid;place-items:center;
-  background:var(--gold);color:var(--navy);font-size:.86rem;letter-spacing:0
-}
-label{display:block;font-size:.86rem;margin:0 0 6px;color:var(--cream-2)}
-input[type=text],input[type=tel]{
-  width:100%;padding:14px 15px;border-radius:14px;
-  border:1.5px solid rgba(224,178,94,.3);
-  background:var(--navy-3);color:var(--cream);
-  /* 16px se chhota rakha to iPhone focus pe poora page zoom kar deta hai */
-  font-size:16px;font-family:inherit;
-}
-input::placeholder{color:rgba(246,236,216,.4)}
-input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 4px var(--ring)}
-.row{display:grid;gap:13px}
-@media(min-width:520px){.row.two{grid-template-columns:1fr 1fr}}
+.themer:hover{border-color:var(--gold);transform:rotate(-14deg)}
+html[data-theme="dark"] .themer .i-sun{display:block}
+html[data-theme="dark"] .themer .i-moon{display:none}
+.themer .i-sun{display:none}
+
+.head{text-align:center;margin:-6px 0 26px}
+.eyebrow{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);
+  font-weight:700;margin:0 0 10px}
+h1{font-family:Fraunces,Georgia,serif;font-weight:700;font-variation-settings:"SOFT" 40,"WONK" 1;
+  font-size:clamp(2rem,8.5vw,2.9rem);line-height:1.05;margin:0 0 12px;letter-spacing:-.01em}
+.sub{margin:0 auto;max-width:33ch;color:var(--ink-soft);font-size:1.02rem}
+
+/* ── cards ───────────────────────────────────────────────────────────────── */
+.card{background:var(--card);border:1.5px solid var(--line);border-radius:var(--r);
+  padding:20px 18px;margin:0 0 16px;box-shadow:var(--shadow);
+  transition:opacity .35s ease,border-color .3s ease}
+.card.locked{opacity:.5;pointer-events:none}
+.card-h{display:flex;align-items:center;gap:11px;margin:0 0 4px}
+.card-h .num{
+  width:27px;height:27px;border-radius:50%;display:grid;place-items:center;flex:none;
+  background:var(--gold-wash);color:var(--gold);font-size:.82rem;font-weight:700;
+  border:1.5px solid var(--gold);transition:background .3s,color .3s}
+.card.ok .card-h .num{background:var(--good);border-color:var(--good);color:var(--card)}
+.card-h h2{font-family:Fraunces,serif;font-size:1.12rem;font-weight:700;margin:0;letter-spacing:-.01em}
+.card-note{color:var(--ink-faint);font-size:.88rem;margin:0 0 16px;padding-left:38px}
+
+/* ── fields ──────────────────────────────────────────────────────────────── */
+.fields{display:grid;gap:13px}
+@media(min-width:480px){.fields.two{grid-template-columns:1fr 1fr}}
+.field label{display:flex;align-items:center;gap:7px;font-size:.82rem;font-weight:600;
+  color:var(--ink-soft);margin:0 0 6px}
+.field label .icon{font-size:.95rem;color:var(--gold)}
+.inp{position:relative;display:flex;align-items:center}
+.inp input{
+  width:100%;padding:13px 40px 13px 14px;border-radius:12px;
+  border:1.5px solid var(--line);background:var(--paper);color:var(--ink);
+  font:inherit;font-size:16px; /* 16px se kam par iPhone poora page zoom kar deta hai */
+  transition:border-color .18s,box-shadow .18s,background .18s}
+.inp input::placeholder{color:var(--ink-faint);opacity:.75}
+.inp input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 4px var(--gold-wash);background:var(--card)}
+.inp .mark{position:absolute;right:12px;font-size:1rem;opacity:0;transform:scale(.5);
+  transition:opacity .25s,transform .25s cubic-bezier(.2,1.5,.4,1);pointer-events:none}
+.field.good .inp .mark{opacity:1;transform:scale(1);color:var(--good)}
+.field.bad .inp input{border-color:var(--bad);box-shadow:0 0 0 4px var(--bad-wash)}
+.field .hint{font-size:.78rem;color:var(--bad);margin:6px 0 0;display:none}
+.field.bad .hint{display:block}
 
 /* ── buttons ─────────────────────────────────────────────────────────────── */
 .btn{
-  -webkit-appearance:none;appearance:none;border:0;cursor:pointer;
-  font-family:inherit;font-size:1.02rem;font-weight:700;
-  padding:16px 22px;border-radius:16px;width:100%;
-  background:linear-gradient(180deg,var(--gold-hi),var(--gold));
-  color:#3a2a0d;box-shadow:0 6px 0 var(--gold-dim);
-  transition:transform .09s ease, box-shadow .09s ease, filter .15s ease;
-}
-.btn:active{transform:translateY(4px);box-shadow:0 2px 0 var(--gold-dim)}
-.btn[disabled]{filter:grayscale(.65) brightness(.7);cursor:not-allowed;box-shadow:0 6px 0 rgba(0,0,0,.3)}
-.btn.ghost{
-  background:transparent;color:var(--gold);
-  border:1.5px dashed rgba(224,178,94,.5);box-shadow:none;font-weight:600
-}
-.btn.ghost:active{transform:none}
+  -webkit-appearance:none;appearance:none;border:1.5px solid var(--ink);cursor:pointer;
+  font:inherit;font-weight:700;font-size:1rem;
+  display:flex;align-items:center;justify-content:center;gap:9px;
+  padding:15px 20px;border-radius:14px;width:100%;
+  background:var(--gold-lit);color:#22180A;box-shadow:var(--lift);
+  transition:transform .1s,box-shadow .1s,filter .2s}
+.btn:hover{filter:brightness(1.05)}
+.btn:active{transform:translateY(4px);box-shadow:0 0 0 var(--ink)}
+.btn:disabled{cursor:not-allowed;filter:grayscale(.7) opacity(.55);box-shadow:var(--lift)}
+.btn:focus-visible,.themer:focus-visible,.inp input:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.btn.quiet{background:transparent;color:var(--ink);border-style:dashed;box-shadow:none}
+.btn.quiet:active{transform:none}
+.btn .icon{font-size:1.15rem}
 
-/* ── photo chunne ka darwaza ─────────────────────────────────────────────── */
-.drop{
-  border:2px dashed rgba(224,178,94,.45);border-radius:20px;
-  padding:26px 16px;text-align:center;background:rgba(29,47,85,.5);
-  transition:background .15s ease,border-color .15s ease;
-}
-.drop.hot{background:rgba(224,178,94,.13);border-color:var(--gold)}
-.drop .big{font-size:2.1rem;line-height:1;margin-bottom:10px}
-.drop p{margin:0 0 14px;color:var(--cream-2);font-size:.94rem}
-.count{font-size:.8rem;color:var(--gold);margin-top:10px}
+/* ── picker ──────────────────────────────────────────────────────────────── */
+.picker{border:2px dashed var(--line);border-radius:15px;padding:22px 16px;text-align:center;
+  background:var(--paper);transition:background .2s,border-color .2s}
+.picker.hot{border-color:var(--gold);background:var(--gold-wash)}
+.picker .art{font-size:1.9rem;color:var(--gold);margin-bottom:8px}
+.picker p{margin:0 0 15px;color:var(--ink-soft);font-size:.94rem}
+.tally{display:flex;align-items:center;justify-content:center;gap:9px;margin-top:14px;
+  font-size:.84rem;color:var(--ink-faint);font-variant-numeric:tabular-nums}
+.pips{display:flex;gap:3px}
+.pip{width:6px;height:6px;border-radius:50%;background:var(--line);transition:background .25s,transform .25s}
+.pip.on{background:var(--gold);transform:scale(1.25)}
+.pip.full{background:var(--bad)}
 
-/* ── photos ki lari ──────────────────────────────────────────────────────── */
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:12px;margin-top:16px}
-.pic{
-  position:relative;aspect-ratio:1;border-radius:15px;overflow:hidden;
-  background:var(--navy-3);border:1.5px solid rgba(224,178,94,.3);
-  /* Halka sa tirchapan — scrapbook jaisa, chipkaaya hua */
-  transform:rotate(var(--tilt,0deg));
-  box-shadow:0 6px 14px rgba(0,0,0,.34);
+/* ── the developing photos ───────────────────────────────────────────────── */
+.roll{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:11px;margin-top:16px}
+.shot{
+  position:relative;aspect-ratio:1;border-radius:13px;overflow:hidden;
+  background:var(--ink);border:1.5px solid var(--line);
+  box-shadow:0 3px 10px rgba(0,0,0,.18);
+  animation:drop .34s cubic-bezier(.2,1.2,.4,1) backwards;
 }
-.pic img{width:100%;height:100%;object-fit:cover;display:block}
-.pic .veil{
-  position:absolute;inset:0;background:rgba(13,23,48,.62);
-  display:grid;place-items:center;transition:opacity .4s ease
+@keyframes drop{from{opacity:0;transform:scale(.86) translateY(8px)}to{opacity:1;transform:none}}
+.shot img{
+  width:100%;height:100%;object-fit:cover;display:block;
+  /* Yahi wo asli baat hai: --dev 0 = kora negative, 1 = poori photo. */
+  filter:grayscale(calc(1 - var(--dev,0))) brightness(calc(.34 + .66 * var(--dev,0)))
+         contrast(calc(.72 + .28 * var(--dev,0)));
+  transform:scale(calc(1.05 - .05 * var(--dev,0)));
+  transition:filter .45s ease-out,transform .45s ease-out;
 }
-.pic.done .veil{opacity:0}
-.pic .pct{font-size:.82rem;font-weight:700;color:var(--gold-hi)}
-.pic .bar{position:absolute;left:0;right:0;bottom:0;height:4px;background:rgba(0,0,0,.4)}
-.pic .bar i{display:block;height:100%;width:0;background:var(--gold);transition:width .25s ease}
-.pic .tick{
-  position:absolute;top:7px;right:7px;width:24px;height:24px;border-radius:50%;
-  background:var(--leaf);display:grid;place-items:center;color:#0d1730;
-  font-size:.85rem;font-weight:800;opacity:0;transform:scale(.4);
-  transition:opacity .3s ease,transform .3s cubic-bezier(.2,1.6,.4,1)
-}
-.pic.done .tick{opacity:1;transform:scale(1)}
-.pic.bad{border-color:var(--rose)}
-.pic.bad .veil{background:rgba(120,30,30,.66);opacity:1}
-.pic .x{
-  position:absolute;top:7px;left:7px;width:24px;height:24px;border-radius:50%;
-  background:rgba(13,23,48,.82);border:1px solid rgba(224,178,94,.5);
-  color:var(--cream);font-size:.9rem;line-height:1;cursor:pointer;
-  display:grid;place-items:center;padding:0
-}
-.pic.done .x,.pic.busy .x{display:none}
+/* Sona sa jhalar, jo develop hote hue neeche sarakta hai */
+.shot .sweep{
+  position:absolute;left:0;right:0;height:26%;pointer-events:none;opacity:0;
+  top:calc(var(--dev,0) * 100% - 13%);
+  background:linear-gradient(to bottom,transparent,var(--gold-lit),transparent);
+  mix-blend-mode:screen;transition:top .45s ease-out,opacity .3s}
+.shot.up .sweep{opacity:.55}
+.shot .pct{
+  position:absolute;left:0;right:0;bottom:0;padding:14px 8px 6px;
+  background:linear-gradient(to top,rgba(8,15,30,.85),transparent);
+  color:#F3E9D6;font-size:.78rem;font-weight:700;text-align:center;
+  font-variant-numeric:tabular-nums;opacity:0;transition:opacity .3s}
+.shot.up .pct{opacity:1}
+.badge{
+  position:absolute;top:6px;right:6px;width:23px;height:23px;border-radius:50%;
+  display:grid;place-items:center;font-size:.8rem;color:var(--card);
+  opacity:0;transform:scale(.3);transition:opacity .3s,transform .35s cubic-bezier(.2,1.7,.4,1)}
+.shot.done .badge{opacity:1;transform:scale(1);background:var(--good)}
+.shot.fail .badge{opacity:1;transform:scale(1);background:var(--bad)}
+.shot.fail::after{content:"";position:absolute;inset:0;background:var(--bad);opacity:.3}
+.shot .act{
+  position:absolute;top:6px;left:6px;width:23px;height:23px;border-radius:50%;
+  display:grid;place-items:center;padding:0;cursor:pointer;font-size:.78rem;
+  background:rgba(8,15,30,.75);color:#F3E9D6;border:1px solid rgba(243,233,214,.35);
+  transition:background .2s,transform .2s;z-index:2}
+.shot .act:hover{background:var(--bad);transform:scale(1.1)}
+.shot.up .act{display:none}
+.shot.fail .act{background:var(--gold-lit);color:#22180A;border-color:var(--ink)}
 
-/* ── neeche chipka hua button ────────────────────────────────────────────── */
-.dock{
-  position:fixed;left:0;right:0;bottom:0;z-index:20;
-  padding:12px 16px calc(12px + env(safe-area-inset-bottom));
-  background:linear-gradient(to top,var(--navy) 62%,rgba(13,23,48,0));
-}
-.dock .inner{max-width:660px;margin:0 auto}
+/* ── dock ────────────────────────────────────────────────────────────────── */
+.dock{position:fixed;left:0;right:0;bottom:0;z-index:30;
+  padding:14px 18px calc(14px + env(safe-area-inset-bottom));
+  background:linear-gradient(to top,var(--paper) 66%,transparent);
+  transition:transform .3s ease}
+.dock .in{max-width:600px;margin:0 auto}
+.meter{margin:0 0 11px;display:none}
+.meter.on{display:block}
+.meter .bar{height:7px;border-radius:99px;background:var(--paper-2);overflow:hidden;
+  border:1.5px solid var(--line)}
+.meter .bar i{display:block;height:100%;width:0;border-radius:99px;
+  background:linear-gradient(90deg,var(--gold),var(--gold-lit));transition:width .3s ease}
+.meter .say{display:flex;justify-content:space-between;gap:12px;margin:7px 2px 0;
+  font-size:.8rem;color:var(--ink-soft);font-variant-numeric:tabular-nums}
+.meter .say b{font-weight:700;color:var(--ink)}
 
-.note{font-size:.82rem;color:rgba(246,236,216,.62);text-align:center;margin:12px 0 0;line-height:1.55}
-.err{
-  background:rgba(217,122,122,.14);border:1.5px solid var(--rose);
-  color:#ffd9d9;border-radius:14px;padding:12px 14px;margin:14px 0;font-size:.92rem
-}
+/* ── messages ────────────────────────────────────────────────────────────── */
+.msg{display:flex;gap:11px;align-items:flex-start;border-radius:14px;padding:13px 14px;
+  margin:0 0 16px;font-size:.9rem;border:1.5px solid var(--bad);background:var(--bad-wash);color:var(--ink)}
+.msg .icon{font-size:1.1rem;color:var(--bad);margin-top:1px}
+.msg .body{flex:1;min-width:0}
+.msg strong{display:block;font-weight:700;margin-bottom:2px}
+.msg .redo{margin-top:9px;width:auto;padding:8px 14px;font-size:.86rem;border-radius:10px;
+  box-shadow:0 3px 0 var(--ink)}
 .hide{display:none !important}
 
-/* ── ho gaya ─────────────────────────────────────────────────────────────── */
-.done-wrap{text-align:center;padding:26px 10px}
-.done-wrap .seal{
-  width:96px;height:96px;margin:0 auto 18px;border-radius:50%;
-  background:linear-gradient(180deg,var(--gold-hi),var(--gold));
-  display:grid;place-items:center;font-size:2.6rem;color:var(--navy);
-  box-shadow:0 10px 26px rgba(224,178,94,.32);
-  animation:pop .5s cubic-bezier(.2,1.6,.4,1)
+/* ── finish ──────────────────────────────────────────────────────────────── */
+.finish{text-align:center;padding:36px 12px 60px}
+.finish .seal{width:88px;height:88px;margin:0 auto 22px;border-radius:50%;display:grid;place-items:center;
+  background:var(--good-wash);border:2px solid var(--good);color:var(--good);font-size:2.4rem;
+  animation:seal .6s cubic-bezier(.2,1.5,.4,1) backwards}
+@keyframes seal{from{transform:scale(.4) rotate(-18deg);opacity:0}to{transform:none;opacity:1}}
+.finish h2{font-family:Fraunces,serif;font-size:2rem;margin:0 0 10px;font-variation-settings:"WONK" 1}
+.finish p{color:var(--ink-soft);margin:0 auto 26px;max-width:30ch}
+.finish .again{max-width:280px;margin:0 auto}
+.finish .strip{display:flex;justify-content:center;gap:7px;margin:0 0 26px;flex-wrap:wrap}
+.finish .strip span{width:34px;height:34px;border-radius:8px;overflow:hidden;border:1.5px solid var(--line);
+  animation:drop .4s backwards}
+.finish .strip img{width:100%;height:100%;object-fit:cover}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms !important;transition-duration:.01ms !important}
 }
-@keyframes pop{from{transform:scale(.3);opacity:0}to{transform:scale(1);opacity:1}}
-.done-wrap h2{font-family:Georgia,serif;font-size:1.9rem;margin:0 0 10px}
 </style>
 </head>
 <body>
 
-<picture>
-  <source srcset="assets/banner.avif" type="image/avif">
-  <img class="banner" src="assets/banner.webp" alt="" width="1400" height="700" fetchpriority="high">
-</picture>
+<!-- Lucide (MIT). Inline, so the page never waits on an icon font or a CDN. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<g id="i-user"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></g>
+<g id="i-phone"><path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"/></g>
+<g id="i-key"><path d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z"/><circle cx="16.5" cy="7.5" r=".5" fill="currentColor"/></g>
+<g id="i-check"><path d="M20 6 9 17l-5-5"/></g>
+<g id="i-checkbig"><path d="M21.801 10A10 10 0 1 1 17 3.335"/><path d="m9 11 3 3L22 4"/></g>
+<g id="i-alert"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></g>
+<g id="i-redo"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/></g>
+<g id="i-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></g>
+<g id="i-trash"><path d="M10 11v6"/><path d="M14 11v6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></g>
+<g id="i-add"><path d="M16 5h6"/><path d="M19 2v6"/><path d="M21 11.5V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7.5"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/><circle cx="9" cy="9" r="2"/></g>
+<g id="i-images"><path d="m22 11-1.296-1.296a2.4 2.4 0 0 0-3.408 0L11 16"/><path d="M4 8a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2"/><circle cx="13" cy="7" r="1" fill="currentColor"/><rect x="8" y="2" width="14" height="14" rx="2"/></g>
+<g id="i-sun"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></g>
+<g id="i-moon"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/></g>
+<g id="i-camera"><path d="M13.997 4a2 2 0 0 1 1.76 1.05l.486.9A2 2 0 0 0 18.003 7H20a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1.997a2 2 0 0 0 1.759-1.048l.489-.904A2 2 0 0 1 10.004 4z"/><circle cx="12" cy="13" r="3"/></g>
+</defs></svg>
 
-<div class="wrap">
+<div class="banner-wrap">
+  <picture>
+    <source srcset="assets/banner.avif" type="image/avif">
+    <img class="banner" src="assets/banner.webp" alt="" width="1400" height="700" fetchpriority="high">
+  </picture>
+</div>
 
-  <div class="head">
-    <p class="kicker" id="kicker">&nbsp;</p>
+<div class="top">
+  <button class="themer" id="themer" type="button" aria-label="Switch between light and dark">
+    <svg class="icon i-moon"><use href="#i-moon"/></svg>
+    <svg class="icon i-sun"><use href="#i-sun"/></svg>
+  </button>
+</div>
+
+<main class="wrap" id="main">
+
+  <header class="head">
+    <p class="eyebrow" id="eyebrow">&nbsp;</p>
     <h1 id="title">&nbsp;</h1>
-    <p class="line" id="line">&nbsp;</p>
+    <p class="sub" id="sub">&nbsp;</p>
+  </header>
+
+  <div class="msg hide" id="alert" role="alert">
+    <svg class="icon"><use href="#i-alert"/></svg>
+    <div class="body">
+      <strong id="alertTitle"></strong>
+      <span id="alertText"></span>
+      <button class="btn redo hide" id="alertRedo" type="button">
+        <svg class="icon"><use href="#i-redo"/></svg> Try again
+      </button>
+    </div>
   </div>
 
-  <div id="fatal" class="err hide"></div>
+  <!-- 1 ───────────────────────────────────────────────────────────────── -->
+  <section class="card" id="card1">
+    <div class="card-h"><span class="num">1</span><h2>Who is sending these</h2></div>
+    <p class="card-note">So the couple knows whose photos these are.</p>
 
-  <!-- ── kaun ho aap ───────────────────────────────────────────────────── -->
-  <section class="card" id="who">
-    <p class="step"><b>1</b> Pehle apna parichay</p>
-    <div class="row two">
-      <div>
-        <label for="g-name">Aapka naam</label>
-        <input id="g-name" type="text" autocomplete="name" placeholder="Jaise: Ankit Sharma" maxlength="60">
+    <div class="fields two">
+      <div class="field" id="f-name">
+        <label for="g-name"><svg class="icon"><use href="#i-user"/></svg> Your name</label>
+        <div class="inp">
+          <input id="g-name" type="text" autocomplete="name" placeholder="Ankit Sharma" maxlength="60">
+          <svg class="icon mark"><use href="#i-check"/></svg>
+        </div>
+        <p class="hint">Please enter your name.</p>
       </div>
-      <div>
-        <label for="g-phone">Phone number</label>
-        <input id="g-phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="98765 43210" maxlength="20">
+      <div class="field" id="f-phone">
+        <label for="g-phone"><svg class="icon"><use href="#i-phone"/></svg> Phone number</label>
+        <div class="inp">
+          <input id="g-phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="98765 43210" maxlength="20">
+          <svg class="icon mark"><use href="#i-check"/></svg>
+        </div>
+        <p class="hint">That does not look like a phone number.</p>
       </div>
     </div>
-    <div style="margin-top:13px">
-      <label for="g-code">Passcode <span style="opacity:.6">(card pe likha hai)</span></label>
-      <input id="g-code" type="text" autocomplete="off" placeholder="••••••" maxlength="40">
+
+    <div class="fields" style="margin-top:13px">
+      <div class="field" id="f-code">
+        <label for="g-code"><svg class="icon"><use href="#i-key"/></svg> Passcode</label>
+        <div class="inp">
+          <input id="g-code" type="text" autocomplete="off" placeholder="Printed on your invitation" maxlength="40">
+          <svg class="icon mark"><use href="#i-check"/></svg>
+        </div>
+        <p class="hint" id="codeHint">That passcode is not right.</p>
+      </div>
     </div>
   </section>
 
-  <!-- ── photos ────────────────────────────────────────────────────────── -->
-  <section class="card" id="pickCard">
-    <p class="step"><b>2</b> Ab photos chuniye</p>
+  <!-- 2 ───────────────────────────────────────────────────────────────── -->
+  <section class="card locked" id="card2">
+    <div class="card-h"><span class="num">2</span><h2>Choose your photos</h2></div>
+    <p class="card-note" id="note2">Fill in your details first.</p>
 
-    <div class="drop" id="drop">
-      <div class="big">📷</div>
-      <p id="dropMsg">Naam aur number bhar dijiye, phir yahan se photos chun sakte hain.</p>
-      <button class="btn ghost" id="pickBtn" disabled>Photos chuniye</button>
-      <p class="count" id="count"></p>
+    <div class="picker" id="picker">
+      <div class="art"><svg class="icon"><use href="#i-images"/></svg></div>
+      <p id="pickWord">Up to 20 photos at a time.</p>
+      <button class="btn quiet" id="pick" type="button">
+        <svg class="icon"><use href="#i-add"/></svg> Choose photos
+      </button>
+      <div class="tally">
+        <span id="tallyWord">0 of 20</span>
+        <span class="pips" id="pips"></span>
+      </div>
     </div>
 
     <input id="file" type="file" accept="image/*" multiple class="hide">
-    <div class="grid" id="grid"></div>
+    <div class="roll" id="roll"></div>
   </section>
+</main>
 
-  <p class="note" id="foot">Aapki photos seedha parivaar ke apne album me jaati hain.</p>
-</div>
-
-<!-- ── neeche ka button ────────────────────────────────────────────────── -->
 <div class="dock" id="dock">
-  <div class="inner">
-    <button class="btn" id="send" disabled>Photos chuniye</button>
+  <div class="in">
+    <div class="meter" id="meter">
+      <div class="bar"><i id="barFill"></i></div>
+      <div class="say"><span id="sayLeft">&nbsp;</span><span id="sayRight">&nbsp;</span></div>
+    </div>
+    <button class="btn" id="send" type="button" disabled>
+      <svg class="icon"><use href="#i-camera"/></svg> <span id="sendWord">Choose photos</span>
+    </button>
   </div>
 </div>
 
-<!-- ── ho gaya ─────────────────────────────────────────────────────────── -->
-<div class="wrap hide" id="thanks">
-  <div class="done-wrap">
-    <div class="seal">✓</div>
-    <h2>Pahunch gayin!</h2>
-    <p class="line" id="thanksLine"></p>
-    <div style="margin-top:22px">
-      <button class="btn ghost" id="again">Aur photos bhejni hain</button>
-    </div>
+<!-- done ──────────────────────────────────────────────────────────────── -->
+<div class="wrap hide" id="finish">
+  <div class="finish">
+    <div class="seal"><svg class="icon"><use href="#i-checkbig"/></svg></div>
+    <h2 id="finishHead">All sent</h2>
+    <p id="finishText"></p>
+    <div class="strip" id="strip"></div>
+    <button class="btn quiet again" id="again" type="button">
+      <svg class="icon"><use href="#i-add"/></svg> Send more photos
+    </button>
   </div>
 </div>
 
 <script>
-/* ═══════════════════════════════════════════════════════════════════════════
-   Guest ka page.
-
-   Do baatein jo poore design ko tay karti hain:
-
-   1. PHOTO KABHI KISI SERVER SE HOKAR NAHI JAATI. Apps Script sirf Google se
-      "resumable session" ka pata leta hai; bytes phone se SEEDHE Drive pe
-      jaate hain. Isliye 30 MB ki photo bhi theek hai aur 4G kat jaye to upload
-      wahin se uthta hai, shuru se nahi.
-
-   2. PREVIEW GUEST KI APNI FILE SE BANTA HAI (createObjectURL). Kahin se
-      download nahi hota — turant dikhta hai, ek byte data kharch nahi hota,
-      aur page ke andar kisi remote link ka naam-o-nishan nahi hota.
-   ═══════════════════════════════════════════════════════════════════════════ */
 (function () {
   'use strict';
 
-  var CONCURRENCY = 3;      // ek saath itni photos. Zyada rakho to har ek dheemi.
-  var RETRIES = 3;
+  var LANES = 3;        // ek saath itni photos. Zyada rakho to har ek dheemi dikhti hai.
+  var TRIES = 3;
+  var HARD_CAP = 20;
 
-  var cfg = null, items = [], busy = false;
-
-  var $ = function (id) { return document.getElementById(id); };
+  var cfg = null, shots = [], running = false;
+  var $ = function (i) { return document.getElementById(i); };
   var nameEl = $('g-name'), phoneEl = $('g-phone'), codeEl = $('g-code');
 
+  /* ── theme ────────────────────────────────────────────────────────────── */
+  var saved = null;
+  try { saved = localStorage.getItem('vault-theme'); } catch (e) {}
+  setTheme(saved || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
+  function setTheme(t) {
+    document.documentElement.setAttribute('data-theme', t);
+    try { localStorage.setItem('vault-theme', t); } catch (e) {}
+  }
+  $('themer').addEventListener('click', function () {
+    setTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+  });
+
   /* ── config ───────────────────────────────────────────────────────────── */
-  fetch('config.json', { cache: 'no-store' })
-    .then(function (r) { return r.json(); })
+  fetch('config.json', { cache: 'no-store' }).then(function (r) { return r.json(); })
     .then(function (all) {
       var slug = new URLSearchParams(location.search).get('e') || all.default;
       cfg = (all.events || {})[slug];
-      if (!cfg) throw new Error('Ye link kis shaadi ka hai, wo pata nahi chala.');
-      if (/^PASTE_/.test(cfg.endpoint || '')) throw new Error('Ye link abhi taiyaar nahi hai.');
-      $('kicker').textContent = cfg.kicker || '';
+      if (!cfg) throw new Error('This link does not point at a wedding we know.');
+      if (/^PASTE_/.test(cfg.endpoint || '')) throw new Error('This link is not ready to receive photos yet.');
+      $('eyebrow').textContent = cfg.kicker || '';
       $('title').textContent = cfg.title || '';
-      $('line').textContent = cfg.line || '';
-      document.title = (cfg.title || 'Photos') + ' — apni photos bhejiye';
-      $('count').textContent = 'Ek baar me ' + max() + ' tak';
+      $('sub').textContent = cfg.line || '';
+      document.title = 'Send your photos to ' + (cfg.title || 'the couple');
+      buildPips(); tally(); refresh();
     })
-    .catch(function (e) { fatal(e.message || String(e)); });
+    .catch(function (e) { stop(e.message); });
 
-  function max() { return (cfg && cfg.maxPhotos) || 20; }
+  function cap() { return Math.min((cfg && cfg.maxPhotos) || HARD_CAP, HARD_CAP); }
 
-  function fatal(msg) {
-    var f = $('fatal'); f.textContent = msg; f.classList.remove('hide');
-    $('dock').classList.add('hide');
-    // Config na mile to sarnama `&nbsp;` par atka reh jaata hai — banner ke
-    // neeche ek khaali khaai, aur guest ko lagta hai page toota hua hai.
-    if (!$('title').textContent.trim()) {
-      $('kicker').textContent = 'Invifest';
-      $('title').textContent = 'Photo album';
-      $('line').textContent = '';
-      $('who').classList.add('hide');
-      $('pickCard').classList.add('hide');
-      $('foot').classList.add('hide');
-    }
+  /* ── messages ─────────────────────────────────────────────────────────── */
+  function say(title, text, onRedo) {
+    $('alertTitle').textContent = title;
+    $('alertText').textContent = text;
+    var b = $('alertRedo');
+    b.classList.toggle('hide', !onRedo);
+    b.onclick = onRedo || null;
+    $('alert').classList.remove('hide');
+    $('alert').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+  function clearSay() { $('alert').classList.add('hide'); }
+
+  /** Sirf un halaton ke liye jinke baad page ka koi matlab nahi bachta. */
+  function stop(text) {
+    say('This link cannot take photos', text);
+    $('alertRedo').classList.add('hide');
+    $('card1').classList.add('hide'); $('card2').classList.add('hide'); $('dock').classList.add('hide');
+    if (!$('title').textContent.trim()) { $('eyebrow').textContent = 'Invifest'; $('title').textContent = 'Photo album'; $('sub').textContent = ''; }
   }
 
-  /* ── Apps Script se baat ──────────────────────────────────────────────── */
+  /* ── the script ───────────────────────────────────────────────────────── */
   // text/plain jaan-boojh kar: ye "simple request" hai, isliye browser pehle
-  // OPTIONS nahi bhejta — aur Apps Script OPTIONS ka jawab de hi nahi sakta.
+  // OPTIONS nahi bhejta - aur Apps Script OPTIONS ka jawab de hi nahi sakta.
   function ask(op, extra) {
     var body = Object.assign({ op: op, secret: cfg.secret, origin: location.origin }, extra || {});
     return fetch(cfg.endpoint, {
-      method: 'POST',
-      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' },
       body: JSON.stringify(body)
     }).then(function (r) { return r.json(); });
   }
 
-  /* ── form ─────────────────────────────────────────────────────────────── */
-  function whoOk() {
-    return nameEl.value.trim().length >= 2 &&
-           /^[0-9+\-\s()]{7,20}$/.test(phoneEl.value.trim());
+  /* ── validation ───────────────────────────────────────────────────────── */
+  var VALID = {
+    name:  function (v) { return v.trim().length >= 2; },
+    phone: function (v) { return /^[0-9+\-\s()]{7,20}$/.test(v.trim()); },
+    code:  function (v) { return v.trim().length >= 1; }
+  };
+  function mark(fieldId, ok, touched) {
+    var f = $(fieldId);
+    f.classList.toggle('good', ok);
+    f.classList.toggle('bad', !ok && touched);
   }
-  function refresh() {
-    var ok = whoOk() && !!cfg;
-    $('pickBtn').disabled = !ok;
-    $('dropMsg').textContent = ok
-      ? 'Jitni bhejni hain chun lijiye — ek saath ' + max() + ' tak.'
-      : 'Naam aur number bhar dijiye, phir yahan se photos chun sakte hain.';
-
-    var pending = items.filter(function (it) { return !it.done; }).length;
-    var send = $('send');
-    if (busy) { send.disabled = true; send.textContent = 'Bheja jaa raha hai…'; return; }
-    send.disabled = !(ok && pending > 0);
-    send.textContent = pending > 0
-      ? (pending === items.length ? 'Bhej dijiye (' + pending + ')' : 'Baaki ' + pending + ' bhejiye')
-      : (items.length ? 'Sab bhej diya' : 'Photos chuniye');
+  function detailsOk() {
+    return VALID.name(nameEl.value) && VALID.phone(phoneEl.value) && VALID.code(codeEl.value);
   }
-  [nameEl, phoneEl, codeEl].forEach(function (el) { el.addEventListener('input', refresh); });
+  [[nameEl, 'f-name', 'name'], [phoneEl, 'f-phone', 'phone'], [codeEl, 'f-code', 'code']]
+    .forEach(function (t) {
+      var el = t[0], id = t[1], rule = t[2];
+      el.addEventListener('input', function () {
+        mark(id, VALID[rule](el.value), false);
+        if (id === 'f-code') $('codeHint').textContent = 'Enter the passcode from your invitation.';
+        refresh();
+      });
+      el.addEventListener('blur', function () { mark(id, VALID[rule](el.value), el.value.length > 0); });
+    });
 
-  /* ── photos chunna ────────────────────────────────────────────────────── */
-  $('pickBtn').addEventListener('click', function () { $('file').click(); });
-  $('file').addEventListener('change', function (e) { add(e.target.files); e.target.value = ''; });
+  /* ── picking ──────────────────────────────────────────────────────────── */
+  function buildPips() {
+    var p = $('pips'); p.textContent = '';
+    for (var i = 0; i < cap(); i++) { var s = document.createElement('span'); s.className = 'pip'; p.appendChild(s); }
+  }
+  function tally() {
+    var n = shots.length, full = n >= cap();
+    $('tallyWord').textContent = n + ' of ' + cap() + (full ? ' — that is the limit' : '');
+    [].forEach.call($('pips').children, function (el, i) {
+      el.classList.toggle('on', i < n);
+      el.classList.toggle('full', full && i < n);
+    });
+  }
 
-  var drop = $('drop');
+  $('pick').addEventListener('click', function () { $('file').click(); });
+  $('file').addEventListener('change', function (e) { take(e.target.files); e.target.value = ''; });
+
+  var picker = $('picker');
   ['dragenter', 'dragover'].forEach(function (t) {
-    drop.addEventListener(t, function (e) { e.preventDefault(); drop.classList.add('hot'); });
+    picker.addEventListener(t, function (e) { e.preventDefault(); if (detailsOk()) picker.classList.add('hot'); });
   });
   ['dragleave', 'drop'].forEach(function (t) {
-    drop.addEventListener(t, function (e) { e.preventDefault(); drop.classList.remove('hot'); });
+    picker.addEventListener(t, function (e) { e.preventDefault(); picker.classList.remove('hot'); });
   });
-  drop.addEventListener('drop', function (e) {
-    if (whoOk() && e.dataTransfer) add(e.dataTransfer.files);
-  });
+  picker.addEventListener('drop', function (e) { if (detailsOk() && e.dataTransfer) take(e.dataTransfer.files); });
 
-  function add(fileList) {
-    var room = max() - items.length;
-    var picked = Array.prototype.slice.call(fileList)
-      .filter(function (f) { return /^image\//.test(f.type); });
-    if (room <= 0) { $('count').textContent = 'Ek baar me ' + max() + ' tak hi.'; return; }
+  function take(list) {
+    var room = cap() - shots.length;
+    var pics = [].slice.call(list).filter(function (f) { return /^image\//.test(f.type); });
+    var skipped = [].slice.call(list).length - pics.length;
 
-    picked.slice(0, room).forEach(function (f) {
-      items.push({ file: f, url: URL.createObjectURL(f), done: false, pct: 0, order: items.length + 1 });
-    });
-    if (picked.length > room) {
-      $('count').textContent = 'Pehli ' + room + ' li gayin — ek baar me ' + max() + ' tak.';
-    } else {
-      $('count').textContent = items.length + ' / ' + max() + ' chuni gayin';
+    if (room <= 0) {
+      say('That is 20 photos', 'Send these first — you can start again straight afterwards for the rest.');
+      return;
     }
-    render(); refresh();
+    pics.slice(0, room).forEach(function (f) {
+      shots.push({ file: f, url: URL.createObjectURL(f), state: 'ready', dev: 0, sent: 0, order: shots.length + 1 });
+    });
+    if (pics.length > room) {
+      say('Only the first ' + room + ' were added', 'Twenty photos is the limit for one go. Send these, then choose the rest.');
+    } else if (skipped) {
+      say(skipped + (skipped === 1 ? ' file was skipped' : ' files were skipped'), 'Only photos can be sent.');
+    } else { clearSay(); }
+    draw(); tally(); refresh();
   }
 
-  function render() {
-    var g = $('grid');
-    g.textContent = '';
-    items.forEach(function (it, i) {
+  function remove(i) {
+    URL.revokeObjectURL(shots[i].url);
+    shots.splice(i, 1);
+    shots.forEach(function (s, k) { s.order = k + 1; });
+    draw(); tally(); refresh();
+  }
+
+  /* ── drawing ──────────────────────────────────────────────────────────── */
+  function draw() {
+    var r = $('roll'); r.textContent = '';
+    shots.forEach(function (s, i) {
       var d = document.createElement('div');
-      d.className = 'pic' + (it.done ? ' done' : '') + (it.bad ? ' bad' : '') + (it.busy ? ' busy' : '');
-      // Har card thoda alag jhuka hua, par tay hisaab se — har render pe
-      // hilta rahe to nasha chadh jaata hai.
-      d.style.setProperty('--tilt', ((i % 5) - 2) * 0.9 + 'deg');
+      d.className = 'shot' + (s.state === 'done' ? ' done' : s.state === 'fail' ? ' fail' : s.state === 'up' ? ' up' : '');
+      d.style.animationDelay = Math.min(i, 8) * 26 + 'ms';
+      d.style.setProperty('--dev', s.dev);
 
       var img = document.createElement('img');
-      img.src = it.url; img.alt = ''; img.loading = 'lazy';
+      img.src = s.url; img.alt = ''; img.loading = 'lazy';
       d.appendChild(img);
 
-      var veil = document.createElement('div'); veil.className = 'veil';
-      var pct = document.createElement('span'); pct.className = 'pct';
-      pct.textContent = it.bad ? 'Nahi gayi' : (it.busy ? it.pct + '%' : '');
-      veil.appendChild(pct); d.appendChild(veil);
+      var sw = document.createElement('div'); sw.className = 'sweep'; d.appendChild(sw);
 
-      var bar = document.createElement('div'); bar.className = 'bar';
-      var fill = document.createElement('i'); fill.style.width = it.pct + '%';
-      bar.appendChild(fill); d.appendChild(bar);
+      var pct = document.createElement('div'); pct.className = 'pct';
+      pct.textContent = Math.round(s.dev * 100) + '%';
+      d.appendChild(pct);
 
-      var tick = document.createElement('div'); tick.className = 'tick'; tick.textContent = '✓';
-      d.appendChild(tick);
+      var b = document.createElement('div'); b.className = 'badge';
+      b.innerHTML = '<svg class="icon"><use href="#' + (s.state === 'fail' ? 'i-alert' : 'i-check') + '"/></svg>';
+      d.appendChild(b);
 
-      if (!it.done && !it.busy && !busy) {
-        var x = document.createElement('button');
-        x.className = 'x'; x.type = 'button'; x.textContent = '×';
-        x.setAttribute('aria-label', 'Ye photo hata dijiye');
-        x.addEventListener('click', function () {
-          URL.revokeObjectURL(it.url);
-          items.splice(i, 1);
-          items.forEach(function (t, k) { t.order = k + 1; });
-          $('count').textContent = items.length + ' / ' + max() + ' chuni gayin';
-          render(); refresh();
-        });
-        d.appendChild(x);
+      if (s.state === 'ready' || s.state === 'fail') {
+        var a = document.createElement('button');
+        a.className = 'act'; a.type = 'button';
+        if (s.state === 'fail') {
+          a.innerHTML = '<svg class="icon"><use href="#i-redo"/></svg>';
+          a.setAttribute('aria-label', 'Try this photo again');
+          a.addEventListener('click', function () { s.state = 'ready'; s.dev = 0; s.sent = 0; draw(); refresh(); });
+        } else {
+          a.innerHTML = '<svg class="icon"><use href="#i-trash"/></svg>';
+          a.setAttribute('aria-label', 'Remove this photo');
+          a.addEventListener('click', function () { remove(i); });
+        }
+        d.appendChild(a);
       }
-      g.appendChild(d);
+      r.appendChild(d);
     });
   }
 
-  function paint(it) {
-    var cards = $('grid').children, i = items.indexOf(it);
-    if (i < 0 || !cards[i]) return;
-    var c = cards[i];
-    c.className = 'pic' + (it.done ? ' done' : '') + (it.bad ? ' bad' : '') + (it.busy ? ' busy' : '');
-    var f = c.querySelector('.bar i'); if (f) f.style.width = it.pct + '%';
-    var p = c.querySelector('.pct');
-    if (p) p.textContent = it.bad ? 'Nahi gayi' : (it.done ? '' : it.pct + '%');
+  /** Ek hi card ko chhoo ke badalna - poora grid dobara banane par har photo
+      ka drop-in animation phir se chalta hai aur screen kaanpne lagti hai. */
+  function touch(s) {
+    var i = shots.indexOf(s), el = $('roll').children[i];
+    if (!el) return;
+    el.className = 'shot' + (s.state === 'done' ? ' done' : s.state === 'fail' ? ' fail' : s.state === 'up' ? ' up' : '');
+    el.style.setProperty('--dev', s.dev);
+    el.querySelector('.pct').textContent = Math.round(s.dev * 100) + '%';
   }
 
-  /* ── ek file, seedha Google pe ────────────────────────────────────────── */
-  /*
-     XHR, fetch nahi — do wajah se: fetch upload ka progress batata hi nahi,
-     aur resumable ka 308 fetch ke liye ek redirect hai jise wo khud follow
-     karne lagta hai.
-  */
-  function put(url, file, from, onPct) {
-    return new Promise(function (resolve, reject) {
+  /* ── the dock ─────────────────────────────────────────────────────────── */
+  function mb(b) { return (b / 1048576).toFixed(1) + ' MB'; }
+
+  function refresh() {
+    var ready = detailsOk();
+    $('card2').classList.toggle('locked', !ready || !cfg);
+    $('card1').classList.toggle('ok', ready);
+    $('card2').classList.toggle('ok', shots.length > 0 && shots.every(function (s) { return s.state === 'done'; }));
+    $('note2').textContent = ready
+      ? 'Choose them all at once — up to ' + cap() + '.'
+      : 'Fill in your details first.';
+
+    var left = shots.filter(function (s) { return s.state !== 'done'; });
+    var b = $('send'), w = $('sendWord');
+    b.disabled = running || !ready || left.length === 0;
+    w.textContent = running ? 'Sending…'
+      : left.length === 0 ? (shots.length ? 'All sent' : 'Choose photos')
+      : left.length === shots.length ? 'Send ' + left.length + (left.length === 1 ? ' photo' : ' photos')
+      : 'Send the remaining ' + left.length;
+    meter();
+  }
+
+  function meter() {
+    var m = $('meter');
+    if (!running) { m.classList.remove('on'); return; }
+    m.classList.add('on');
+    var total = 0, sent = 0, done = 0, live = 0;
+    shots.forEach(function (s) {
+      if (s.state === 'done' || s.state === 'up' || s.state === 'ready') total += s.file.size;
+      sent += s.sent;
+      if (s.state === 'done') done++;
+      if (s.state === 'up') live++;
+    });
+    var pc = total ? Math.min(100, (sent / total) * 100) : 0;
+    $('barFill').style.width = pc.toFixed(1) + '%';
+    $('sayLeft').innerHTML = '<b>' + done + '</b> of ' + shots.length + ' photos sent'
+      + (live ? ' · ' + live + ' uploading' : '');
+    $('sayRight').textContent = mb(sent) + ' of ' + mb(total);
+  }
+
+  /* ── one photo, straight to Google ────────────────────────────────────── */
+  /* XHR, fetch nahi: fetch upload ka progress deta hi nahi, aur resumable ka
+     308 uske liye ek redirect hai jise wo khud follow karne lagta hai. */
+  function put(url, file, from, onBytes) {
+    return new Promise(function (ok, no) {
       var x = new XMLHttpRequest();
       x.open('PUT', url, true);
       var body = file;
       if (from > 0) {
         body = file.slice(from);
-        x.setRequestHeader('Content-Range',
-          'bytes ' + from + '-' + (file.size - 1) + '/' + file.size);
+        x.setRequestHeader('Content-Range', 'bytes ' + from + '-' + (file.size - 1) + '/' + file.size);
       }
-      x.upload.onprogress = function (e) {
-        if (e.lengthComputable) onPct(Math.round(((from + e.loaded) / file.size) * 100));
-      };
+      x.upload.onprogress = function (e) { if (e.lengthComputable) onBytes(from + e.loaded); };
       x.onload = function () {
         if (x.status === 200 || x.status === 201) {
-          try { resolve(JSON.parse(x.responseText)); }
-          catch (err) { resolve({}); }
-        } else reject(new Error('HTTP ' + x.status));
+          try { ok(JSON.parse(x.responseText)); } catch (e) { ok({}); }
+        } else no(new Error('HTTP ' + x.status));
       };
-      x.onerror = function () { reject(new Error('network')); };
-      x.ontimeout = function () { reject(new Error('timeout')); };
+      x.onerror = function () { no(new Error('network')); };
       x.send(body);
     });
   }
 
-  /* Google se poochho ki uske paas ab tak kitna pahuncha — wahin se aage. */
+  /* Google se poochho uske paas ab tak kitna pahuncha - wahin se aage. */
   function howFar(url, size) {
-    return new Promise(function (resolve) {
+    return new Promise(function (ok) {
       var x = new XMLHttpRequest();
       x.open('PUT', url, true);
       x.setRequestHeader('Content-Range', 'bytes */' + size);
       x.onload = x.onerror = function () {
-        var r = x.getResponseHeader('Range');   // "bytes=0-262143"
-        var m = r && r.match(/-(\d+)$/);
-        resolve(m ? Number(m[1]) + 1 : 0);
+        var m = (x.getResponseHeader('Range') || '').match(/-(\d+)$/);
+        ok(m ? Number(m[1]) + 1 : 0);
       };
       x.send();
     });
   }
 
-  function upload(it) {
-    it.busy = true; paint(it);
+  function lift(s) {
+    s.state = 'up'; touch(s);
     var from = 0, tries = 0;
-
     function go() {
-      return put(it.slot.url, it.file, from, function (p) { it.pct = p; paint(it); })
-        .then(function (res) {
-          it.busy = false; it.done = true; it.pct = 100; it.id = res.id; paint(it);
-        })
-        .catch(function (err) {
-          tries++;
-          if (tries >= RETRIES) {
-            it.busy = false; it.bad = true; it.err = err.message; paint(it);
-            return;
-          }
-          // Girne ke baad shuru se nahi — jahan chhoda tha wahin se.
-          return howFar(it.slot.url, it.file.size).then(function (got) {
-            from = got; it.pct = Math.round((got / it.file.size) * 100); paint(it);
-            return new Promise(function (r) { setTimeout(r, 700 * tries); }).then(go);
-          });
+      return put(s.slot.url, s.file, from, function (bytes) {
+        s.sent = bytes; s.dev = bytes / s.file.size; touch(s); meter();
+      }).then(function (res) {
+        s.state = 'done'; s.dev = 1; s.sent = s.file.size; s.id = res.id;
+        draw(); meter();
+      }).catch(function () {
+        tries++;
+        if (tries >= TRIES) { s.state = 'fail'; draw(); meter(); return; }
+        return howFar(s.slot.url, s.file.size).then(function (got) {
+          from = got; s.sent = got; s.dev = got / s.file.size; touch(s); meter();
+          return new Promise(function (r) { setTimeout(r, 700 * tries); }).then(go);
         });
+      });
     }
     return go();
   }
 
-  /* ── bhejo ────────────────────────────────────────────────────────────── */
-  $('send').addEventListener('click', function () {
-    if (busy) return;
-    var todo = items.filter(function (it) { return !it.done; });
-    if (!todo.length || !whoOk()) return;
+  /* ── send ─────────────────────────────────────────────────────────────── */
+  $('send').addEventListener('click', send);
 
-    busy = true; refresh(); render();
-    $('fatal').classList.add('hide');
+  function send() {
+    if (running) return;
+    var todo = shots.filter(function (s) { return s.state !== 'done'; });
+    if (!todo.length || !detailsOk()) return;
+
+    clearSay();
+    running = true; refresh(); draw();
 
     ask('slots', {
-      guestName: nameEl.value.trim(),
-      guestPhone: phoneEl.value.trim(),
+      guestName: nameEl.value.trim(), guestPhone: phoneEl.value.trim(),
       passcode: codeEl.value.trim(),
-      files: todo.map(function (it) {
-        return { name: it.file.name, size: it.file.size, mime: it.file.type };
-      })
+      files: todo.map(function (s) { return { name: s.file.name, size: s.file.size, mime: s.file.type }; })
     }).then(function (res) {
-      if (!res || !res.ok) throw new Error((res && res.error) || 'Abhi nahi ho paaya.');
-
-      todo.forEach(function (it, i) { it.slot = res.slots[i]; });
-      var bad = todo.filter(function (it) { return !it.slot || !it.slot.url; });
-      bad.forEach(function (it) { it.bad = true; it.err = (it.slot && it.slot.error) || 'slot nahi mila'; paint(it); });
-
-      var queue = todo.filter(function (it) { return it.slot && it.slot.url; });
-      var next = 0;
-      function worker() {
-        if (next >= queue.length) return Promise.resolve();
-        var it = queue[next++];
-        return upload(it).then(worker);
+      if (!res || !res.ok) {
+        var e = new Error((res && res.error) || 'The album did not answer.');
+        e.passcode = /passcode/i.test(e.message);
+        throw e;
       }
-      var lanes = [];
-      for (var i = 0; i < Math.min(CONCURRENCY, queue.length); i++) lanes.push(worker());
-      return Promise.all(lanes);
-    }).then(function () {
-      var ok = items.filter(function (it) { return it.done && it.id; });
-      if (!ok.length) throw new Error('Ek bhi photo nahi ja paayi. Network dekh ke phir se try kijiye.');
-      return ask('done', {
-        guestName: nameEl.value.trim(),
-        guestPhone: phoneEl.value.trim(),
-        uploaded: ok.map(function (it) {
-          return { id: it.id, name: it.slot.name, order: it.order };
-        })
-      }).then(function () { return ok.length; });
-    }).then(function (n) {
-      busy = false;
-      var failed = items.filter(function (it) { return it.bad; }).length;
-      if (failed) { refresh(); render(); fatalSoft(failed); return; }
-      celebrate(n);
-    }).catch(function (e) {
-      busy = false; refresh(); render();
-      fatal(e.message || String(e));
-    });
-  });
+      todo.forEach(function (s, i) { s.slot = res.slots[i]; });
+      todo.filter(function (s) { return !s.slot || !s.slot.url; })
+          .forEach(function (s) { s.state = 'fail'; });
+      draw();
 
-  function fatalSoft(n) {
-    var f = $('fatal');
-    f.textContent = n + ' photo nahi ja paayi. Neeche wala button dabaiye, sirf wahi dobara jayengi.';
-    f.classList.remove('hide');
+      var q = todo.filter(function (s) { return s.slot && s.slot.url; }), n = 0;
+      function lane() { return n >= q.length ? Promise.resolve() : lift(q[n++]).then(lane); }
+      var all = []; for (var i = 0; i < Math.min(LANES, q.length); i++) all.push(lane());
+      return Promise.all(all);
+    }).then(function () {
+      var won = shots.filter(function (s) { return s.state === 'done' && s.id; });
+      if (!won.length) throw new Error('Not one photo made it. Check your connection and try again.');
+      return ask('done', {
+        guestName: nameEl.value.trim(), guestPhone: phoneEl.value.trim(),
+        uploaded: won.map(function (s) { return { id: s.id, name: s.slot.name, order: s.order }; })
+      }).then(function () { return won.length; });
+    }).then(function (n) {
+      running = false;
+      var lost = shots.filter(function (s) { return s.state === 'fail'; }).length;
+      refresh();
+      if (lost) {
+        say(lost + (lost === 1 ? ' photo did not go' : ' photos did not go'),
+            'The rest are safely in. Tap below to send just those again.', send);
+      } else {
+        finish(n);
+      }
+    }).catch(function (e) {
+      running = false;
+      shots.forEach(function (s) { if (s.state === 'up') { s.state = 'ready'; s.dev = 0; s.sent = 0; } });
+      draw(); refresh();
+      if (e.passcode) {
+        // Passcode galat hai - ye poora page marne ki wajah nahi hai. Field pe
+        // nishaan lagao, guest ko wahin le jao, aur button zinda chhod do.
+        $('codeHint').textContent = 'That passcode is not right. Check your invitation.';
+        $('f-code').classList.add('bad'); $('f-code').classList.remove('good');
+        codeEl.focus(); codeEl.select();
+        say('That passcode is not right', 'Check the passcode printed on your invitation, then send again.');
+      } else {
+        say('Could not send just now', e.message, send);
+      }
+    });
   }
 
-  function celebrate(n) {
-    items.forEach(function (it) { URL.revokeObjectURL(it.url); });
-    document.querySelector('.wrap').classList.add('hide');
-    $('dock').classList.add('hide');
-    $('thanks').classList.remove('hide');
-    $('thanksLine').textContent =
-      n + (n === 1 ? ' photo' : ' photos') + ' pahunch gayin. Bahut bahut shukriya!';
+  /* ── done ─────────────────────────────────────────────────────────────── */
+  function finish(n) {
+    var strip = $('strip'); strip.textContent = '';
+    shots.filter(function (s) { return s.state === 'done'; }).slice(0, 8).forEach(function (s, i) {
+      var w = document.createElement('span'); w.style.animationDelay = (120 + i * 55) + 'ms';
+      var im = document.createElement('img'); im.src = s.url; im.alt = '';
+      w.appendChild(im); strip.appendChild(w);
+    });
+    $('finishText').textContent = n === 1
+      ? 'Your photo is in the family album.'
+      : 'All ' + n + ' photos are in the family album.';
+    $('main').classList.add('hide'); $('dock').classList.add('hide');
+    $('finish').classList.remove('hide');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   $('again').addEventListener('click', function () {
-    items = [];
-    $('grid').textContent = '';
-    $('count').textContent = 'Ek baar me ' + max() + ' tak';
-    $('thanks').classList.add('hide');
-    document.querySelector('.wrap').classList.remove('hide');
-    $('dock').classList.remove('hide');
-    $('fatal').classList.add('hide');
-    refresh();
+    // Purane blob URL sirf ab chhode jaate hain - success ki patti unhi par
+    // khadi thi, aur pehle chhod dete to woh khaali dikhti.
+    shots.forEach(function (s) { URL.revokeObjectURL(s.url); });
+    shots = [];
+    $('roll').textContent = ''; $('strip').textContent = '';
+    $('finish').classList.add('hide');
+    $('main').classList.remove('hide'); $('dock').classList.remove('hide');
+    clearSay(); tally(); refresh();
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 
