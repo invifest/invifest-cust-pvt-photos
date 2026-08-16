@@ -340,12 +340,12 @@ body.typing .dock{transform:translateY(115%);opacity:0;pointer-events:none}
 
     <div class="fields" style="margin-top:13px">
       <div class="field" id="f-code">
-        <label for="g-code"><svg class="icon"><use href="#i-key"/></svg> Passcode</label>
+        <label for="g-code"><svg class="icon"><use href="#i-key"/></svg> Your code</label>
         <div class="inp">
-          <input id="g-code" type="text" autocomplete="off" placeholder="Printed on your invitation" maxlength="40">
+          <input id="g-code" type="text" autocomplete="off" placeholder="The code the couple sent you" maxlength="40">
           <svg class="icon mark"><use href="#i-check"/></svg>
         </div>
-        <p class="hint" id="codeHint">That passcode is not right.</p>
+        <p class="hint" id="codeHint">That code is not right.</p>
       </div>
     </div>
   </section>
@@ -453,6 +453,11 @@ body.typing .dock{transform:translateY(115%);opacity:0;pointer-events:none}
     })
     .catch(function (e) { stop(e.message); });
 
+  /** "Radhika & Roshan" -> "Radhika and Roshan", waakya me padhne ke liye. */
+  function who() {
+    return ((cfg && cfg.title) || 'the couple').replace(/\s*&\s*/g, ' and ');
+  }
+
   function cap() { return Math.min((cfg && cfg.maxPhotos) || HARD_CAP, HARD_CAP); }
 
   /* ── messages ─────────────────────────────────────────────────────────── */
@@ -505,7 +510,7 @@ body.typing .dock{transform:translateY(115%);opacity:0;pointer-events:none}
       var el = t[0], id = t[1], rule = t[2];
       el.addEventListener('input', function () {
         mark(id, VALID[rule](el.value), false);
-        if (id === 'f-code') $('codeHint').textContent = 'Enter the passcode from your invitation.';
+        if (id === 'f-code') $('codeHint').textContent = 'Enter the code ' + who() + ' sent you.';
         refresh();
       });
       el.addEventListener('blur', function () {
@@ -885,10 +890,10 @@ body.typing .dock{transform:translateY(115%);opacity:0;pointer-events:none}
       if (e.passcode) {
         // Passcode galat hai - ye poora page marne ki wajah nahi hai. Field pe
         // nishaan lagao, guest ko wahin le jao, aur button zinda chhod do.
-        $('codeHint').textContent = 'That passcode is not right. Check your invitation.';
+        $('codeHint').textContent = 'That code is not right. Ask ' + who() + ' for it.';
         $('f-code').classList.add('bad'); $('f-code').classList.remove('good');
         codeEl.focus(); codeEl.select();
-        say('That passcode is not right', 'Check the passcode printed on your invitation, then send again.');
+        say('That code is not right', 'Ask ' + who() + ' for the code they sent, then send again.');
       } else {
         say('Could not send just now', e.message, send);
       }
@@ -907,7 +912,7 @@ body.typing .dock{transform:translateY(115%);opacity:0;pointer-events:none}
     $('finishText').textContent = (n === 1
       ? 'Your photo is in the album.'
       : 'All ' + n + ' photos are in the album.') + ' ' + couple + ' will see them.';
-    $('tellWord').textContent = 'Tell ' + couple.replace(/ & /g, ' and ');
+    $('tellWord').textContent = 'Tell ' + who();
     $('main').classList.add('hide'); $('dock').classList.add('hide');
     $('finish').classList.remove('hide');
     window.scrollTo({ top: 0, behavior: 'smooth' });

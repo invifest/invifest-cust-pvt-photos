@@ -19,7 +19,7 @@
     "radhika-roshan": {
       "title": "Radhika & Roshan",
       "kicker": "15 January 2027 · Kshana by the Sea",
-      "line": "Aapke phone me jo tasveerein hain, wo humare paas bhi honi chahiye.",
+      "line": "You were there. Send us the photos you took — we would love to see the night through your eyes.",
       "endpoint": "https://script.google.com/macros/s/AKfycby7H25vOvpPqaKuxEjNnjg41Mfd1fUcQo2lazwdi2TLMGFSGcDe99yjGODEQPZsCXwM/exec",
       "secret": "radhikaroshan",
       "maxPhotos": 20,
@@ -27,10 +27,10 @@
       "_notify": [
         "Sab bhejne ke baad guest ko jo button dikhta hai. `phone` couple ka",
         "WhatsApp number hai, country code ke saath, bina + ke.",
-        "🚨 Neeche abhi Invifest ka number hai — couple ka daalna zaroori hai."
+        "Abhi Radhika & Roshan ka number hai: +1 778 598 8373."
       ],
       "notify": {
-        "phone": "919574486049",
+        "phone": "17785988373",
         "text": "Hi Radhika & Roshan! I've just added my photos from your wedding to your album."
       }
     }
