@@ -95,7 +95,10 @@ html[data-theme="dark"] .themer .i-moon{display:none}
   font-weight:700;margin:0 0 10px}
 h1{font-family:Fraunces,Georgia,serif;font-weight:700;font-variation-settings:"SOFT" 40,"WONK" 1;
   font-size:clamp(2rem,8.5vw,2.9rem);line-height:1.05;margin:0 0 12px;letter-spacing:-.01em}
-.sub{margin:0 auto;max-width:33ch;color:var(--ink-soft);font-size:1.02rem}
+.sub{margin:0 auto;max-width:33ch;color:var(--ink-soft);font-size:1.02rem;
+  /* Copy me daali gayi line-break wahin toote jahan likhi gayi hai. HTML
+     ke bajaye white-space se, taaki config sirf text rahe. */
+  white-space:pre-line}
 
 /* ── cards ───────────────────────────────────────────────────────────────── */
 .card{background:var(--card);border:1.5px solid var(--line);border-radius:var(--r);

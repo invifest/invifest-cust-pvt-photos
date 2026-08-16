@@ -12,18 +12,15 @@
     "aur server pe check hota hai. Yahan rakhte to page ka source kholte hi",
     "dikh jaata, aur wo koi darwaza na hota."
   ],
-
   "default": "radhika-roshan",
-
   "events": {
     "radhika-roshan": {
       "title": "Radhika & Roshan",
       "kicker": "15 January 2027 · Kshana by the Sea",
-      "line": "You were there. Send us the photos you took — we would love to see the night through your eyes.",
+      "line": "Its finally over, but we would love to see the night through your eyes 👀\nSend us the photos you took ❤️",
       "endpoint": "https://script.google.com/macros/s/AKfycby7H25vOvpPqaKuxEjNnjg41Mfd1fUcQo2lazwdi2TLMGFSGcDe99yjGODEQPZsCXwM/exec",
       "secret": "radhikaroshan",
       "maxPhotos": 20,
-
       "_notify": [
         "Sab bhejne ke baad guest ko jo button dikhta hai. `phone` couple ka",
         "WhatsApp number hai, country code ke saath, bina + ke.",
