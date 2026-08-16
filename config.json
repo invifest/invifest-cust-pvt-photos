@@ -22,7 +22,17 @@
       "line": "Aapke phone me jo tasveerein hain, wo humare paas bhi honi chahiye.",
       "endpoint": "https://script.google.com/macros/s/AKfycby7H25vOvpPqaKuxEjNnjg41Mfd1fUcQo2lazwdi2TLMGFSGcDe99yjGODEQPZsCXwM/exec",
       "secret": "radhikaroshan",
-      "maxPhotos": 20
+      "maxPhotos": 20,
+
+      "_notify": [
+        "Sab bhejne ke baad guest ko jo button dikhta hai. `phone` couple ka",
+        "WhatsApp number hai, country code ke saath, bina + ke.",
+        "🚨 Neeche abhi Invifest ka number hai — couple ka daalna zaroori hai."
+      ],
+      "notify": {
+        "phone": "919574486049",
+        "text": "Hi Radhika & Roshan! I've just added my photos from your wedding to your album."
+      }
     }
   }
 }

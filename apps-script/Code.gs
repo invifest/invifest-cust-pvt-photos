@@ -95,6 +95,7 @@ function doPost(e) {
 
   try {
     if (body.op === 'ping')  return out(ping());
+    if (body.op === 'check') return out(check(body));
     if (body.op === 'slots') return out(slots(body));
     if (body.op === 'done')  return out(done(body));
   } catch (err) {
@@ -115,6 +116,37 @@ function out(obj) {
 function ping() {
   var f = DriveApp.getFolderById(P.getProperty('FOLDER_ID'));
   return { ok: true, folder: f.getName(), maxFiles: MAX_FILES };
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   CHECK  —  is number se pehle bhi photos aayi hain?
+
+   Ledger hi hamara ekmatra record hai, to gin-ti wahin se hoti hai — koi alag
+   database nahi. Number ke aakhri 10 ank se milaya jaata hai, taaki +91,
+   spaces aur dashes ka farq na pade.
+
+   Ye SIRF page ko batane ke liye hai. `slots` ise rok nahi lagata — warna
+   jiski 5 photos beech me gir gayi thi, wo dobara koshish hi na kar paata, aur
+   wo galti bhejne se zyada mehngi hai.
+   ═══════════════════════════════════════════════════════════════════════════ */
+function check(body) {
+  var want = String(body.guestPhone || '').replace(/\D/g, '').slice(-10);
+  if (want.length < 7) return { ok: true, already: false };
+
+  var sh = ledger();
+  var last = sh.getLastRow();
+  if (last < 2) return { ok: true, already: false };
+
+  var rows = sh.getRange(2, 2, last - 1, 2).getValues();   // Guest, Number
+  var n = 0, who = '';
+  for (var i = 0; i < rows.length; i++) {
+    if (String(rows[i][1] || '').replace(/\D/g, '').slice(-10) === want) {
+      n++;
+      if (!who) who = String(rows[i][0] || '');
+    }
+  }
+  return { ok: true, already: n > 0, count: n, name: who };
 }
 
 

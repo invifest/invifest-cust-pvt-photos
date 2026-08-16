@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
 <meta name="color-scheme" content="light dark">
 <meta name="robots" content="noindex, nofollow">
 <title>Send your photos</title>
@@ -65,7 +65,10 @@ body{
 }
 .wrap{max-width:600px;margin:0 auto;padding:0 18px 190px}
 .icon{width:1em;height:1em;display:inline-block;vertical-align:-.13em;flex:none;
-  stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;
+  /* Stroke 24x24 ke kinare par aadha bahar padta hai. Bina iske har icon ka
+     kinara bal ka bal kata dikhta hai - phone par sabse pehle wahi nazar aata. */
+  overflow:visible}
 
 /* ── banner ──────────────────────────────────────────────────────────────── */
 .banner-wrap{position:relative;overflow:hidden}
@@ -167,6 +170,10 @@ h1{font-family:Fraunces,Georgia,serif;font-weight:700;font-variation-settings:"S
   animation:drop .34s cubic-bezier(.2,1.2,.4,1) backwards;
 }
 @keyframes drop{from{opacity:0;transform:scale(.86) translateY(8px)}to{opacity:1;transform:none}}
+.shot img,.strip img{
+  -webkit-user-select:none;user-select:none;-webkit-touch-callout:none;
+  pointer-events:none;-webkit-user-drag:none;
+}
 .shot img{
   width:100%;height:100%;object-fit:cover;display:block;
   /* Yahi wo asli baat hai: --dev 0 = kora negative, 1 = poori photo. */
@@ -208,8 +215,11 @@ h1{font-family:Fraunces,Georgia,serif;font-weight:700;font-variation-settings:"S
 .dock{position:fixed;left:0;right:0;bottom:0;z-index:30;
   padding:14px 18px calc(14px + env(safe-area-inset-bottom));
   background:linear-gradient(to top,var(--paper) 66%,transparent);
-  transition:transform .3s ease}
+  transition:transform .28s ease,opacity .2s ease}
+body.typing .dock{transform:translateY(115%);opacity:0;pointer-events:none}
 .dock .in{max-width:600px;margin:0 auto}
+/* Keyboard khulne par jis field pe ho, wo dikhti rahe */
+.field{scroll-margin-top:90px;scroll-margin-bottom:120px}
 .meter{margin:0 0 11px;display:none}
 .meter.on{display:block}
 .meter .bar{height:7px;border-radius:99px;background:var(--paper-2);overflow:hidden;
@@ -253,20 +263,22 @@ h1{font-family:Fraunces,Georgia,serif;font-weight:700;font-variation-settings:"S
 
 <!-- Lucide (MIT). Inline, so the page never waits on an icon font or a CDN. -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
-<g id="i-user"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></g>
-<g id="i-phone"><path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"/></g>
-<g id="i-key"><path d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z"/><circle cx="16.5" cy="7.5" r=".5" fill="currentColor"/></g>
-<g id="i-check"><path d="M20 6 9 17l-5-5"/></g>
-<g id="i-checkbig"><path d="M21.801 10A10 10 0 1 1 17 3.335"/><path d="m9 11 3 3L22 4"/></g>
-<g id="i-alert"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></g>
-<g id="i-redo"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/></g>
-<g id="i-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></g>
-<g id="i-trash"><path d="M10 11v6"/><path d="M14 11v6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></g>
-<g id="i-add"><path d="M16 5h6"/><path d="M19 2v6"/><path d="M21 11.5V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7.5"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/><circle cx="9" cy="9" r="2"/></g>
-<g id="i-images"><path d="m22 11-1.296-1.296a2.4 2.4 0 0 0-3.408 0L11 16"/><path d="M4 8a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2"/><circle cx="13" cy="7" r="1" fill="currentColor"/><rect x="8" y="2" width="14" height="14" rx="2"/></g>
-<g id="i-sun"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></g>
-<g id="i-moon"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/></g>
-<g id="i-camera"><path d="M13.997 4a2 2 0 0 1 1.76 1.05l.486.9A2 2 0 0 0 18.003 7H20a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1.997a2 2 0 0 0 1.759-1.048l.489-.904A2 2 0 0 1 10.004 4z"/><circle cx="12" cy="13" r="3"/></g>
+<symbol id="i-user" viewBox="0 0 24 24"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
+<symbol id="i-phone" viewBox="0 0 24 24"><path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"/></symbol>
+<symbol id="i-key" viewBox="0 0 24 24"><path d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z"/><circle cx="16.5" cy="7.5" r=".5" fill="currentColor"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+<symbol id="i-checkbig" viewBox="0 0 24 24"><path d="M21.801 10A10 10 0 1 1 17 3.335"/><path d="m9 11 3 3L22 4"/></symbol>
+<symbol id="i-alert" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></symbol>
+<symbol id="i-redo" viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/></symbol>
+<symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
+<symbol id="i-trash" viewBox="0 0 24 24"><path d="M10 11v6"/><path d="M14 11v6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></symbol>
+<symbol id="i-add" viewBox="0 0 24 24"><path d="M16 5h6"/><path d="M19 2v6"/><path d="M21 11.5V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7.5"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/><circle cx="9" cy="9" r="2"/></symbol>
+<symbol id="i-images" viewBox="0 0 24 24"><path d="m22 11-1.296-1.296a2.4 2.4 0 0 0-3.408 0L11 16"/><path d="M4 8a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2"/><circle cx="13" cy="7" r="1" fill="currentColor"/><rect x="8" y="2" width="14" height="14" rx="2"/></symbol>
+<symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></symbol>
+<symbol id="i-moon" viewBox="0 0 24 24"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/></symbol>
+<symbol id="i-send" viewBox="0 0 24 24"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"/><path d="m21.854 2.147-10.94 10.939"/></symbol>
+<symbol id="i-heart" viewBox="0 0 24 24"><path d="M19.414 14.414C21 12.828 22 11.5 22 9.5a5.5 5.5 0 0 0-9.591-3.676.6.6 0 0 1-.818.001A5.5 5.5 0 0 0 2 9.5c0 2.3 1.5 4 3 5.5l5.535 5.362a2 2 0 0 0 2.879.052 2.12 2.12 0 0 0-.004-3 2.124 2.124 0 1 0 3-3 2.124 2.124 0 0 0 3.004 0 2 2 0 0 0 0-2.828l-1.881-1.882a2.41 2.41 0 0 0-3.409 0l-1.71 1.71a2 2 0 0 1-2.828 0 2 2 0 0 1 0-2.828l2.823-2.762"/></symbol>
+<symbol id="i-camera" viewBox="0 0 24 24"><path d="M13.997 4a2 2 0 0 1 1.76 1.05l.486.9A2 2 0 0 0 18.003 7H20a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1.997a2 2 0 0 0 1.759-1.048l.489-.904A2 2 0 0 1 10.004 4z"/><circle cx="12" cy="13" r="3"/></symbol>
 </defs></svg>
 
 <div class="banner-wrap">
@@ -345,7 +357,7 @@ h1{font-family:Fraunces,Georgia,serif;font-weight:700;font-variation-settings:"S
 
     <div class="picker" id="picker">
       <div class="art"><svg class="icon"><use href="#i-images"/></svg></div>
-      <p id="pickWord">Up to 20 photos at a time.</p>
+      <p id="pickWord">Pick as many as you like — the best 20 are sent.</p>
       <button class="btn quiet" id="pick" type="button">
         <svg class="icon"><use href="#i-add"/></svg> Choose photos
       </button>
@@ -379,8 +391,25 @@ h1{font-family:Fraunces,Georgia,serif;font-weight:700;font-variation-settings:"S
     <h2 id="finishHead">All sent</h2>
     <p id="finishText"></p>
     <div class="strip" id="strip"></div>
-    <button class="btn quiet again" id="again" type="button">
-      <svg class="icon"><use href="#i-add"/></svg> Send more photos
+    <button class="btn again" id="tell" type="button">
+      <svg class="icon"><use href="#i-send"/></svg> <span id="tellWord">Let them know</span>
+    </button>
+  </div>
+</div>
+
+<!-- pehle se bhej chuke hain ─────────────────────────────────────────────
+     Ye "mana" karne wala parda nahi hai. Guest ne kaam poora kar diya hai;
+     usse jhagadna nahi, uska shukriya karna hai. Isliye tone wahi hai jo
+     kaamyaabi wale parde ki hai, sirf shabd alag. -->
+<div class="wrap hide" id="already">
+  <div class="finish">
+    <div class="seal" style="background:var(--gold-wash);border-color:var(--gold);color:var(--gold)">
+      <svg class="icon"><use href="#i-heart"/></svg>
+    </div>
+    <h2>We already have yours</h2>
+    <p id="alreadyText"></p>
+    <button class="btn again" id="tell2" type="button">
+      <svg class="icon"><use href="#i-send"/></svg> Say hello to the couple
     </button>
   </div>
 </div>
@@ -479,8 +508,74 @@ h1{font-family:Fraunces,Georgia,serif;font-weight:700;font-variation-settings:"S
         if (id === 'f-code') $('codeHint').textContent = 'Enter the passcode from your invitation.';
         refresh();
       });
-      el.addEventListener('blur', function () { mark(id, VALID[rule](el.value), el.value.length > 0); });
+      el.addEventListener('blur', function () {
+        mark(id, VALID[rule](el.value), el.value.length > 0);
+        if (id === 'f-phone' && VALID.phone(el.value)) seenBefore(el.value.trim());
+      });
     });
+
+  /* ── has this number already sent? ────────────────────────────────────── */
+  /*
+     Poochha ledger se jaata hai - wahi ek record hai, koi alag database nahi.
+     Ye jawab aane ka intezaar upload rok kar nahi karta: agar network dheema
+     hai to guest bina ruke aage badh sakta hai, aur jawab aate hi parda badal
+     jaayega. Ek band darwaza dikhane se behtar hai ek dheema darwaza.
+  */
+  var asked = {};
+  function seenBefore(phone) {
+    if (!cfg) return;
+    var key = phone.replace(/\D/g, '').slice(-10);
+    if (key.length < 7 || asked[key]) return;
+    asked[key] = true;
+    ask('check', { guestPhone: phone }).then(function (r) {
+      if (!r || !r.ok || !r.already) return;
+      if (running || shots.some(function (s) { return s.state === 'done'; })) return;
+      var who = (r.name || '').split(' ')[0];
+      $('alreadyText').textContent =
+        (who ? who + ', your' : 'Your') + ' ' + r.count + (r.count === 1 ? ' photo is' : ' photos are') +
+        ' already in the album — they came through earlier from this number. ' +
+        'Thank you, honestly. That is exactly what the couple were hoping for.';
+      $('main').classList.add('hide'); $('dock').classList.add('hide');
+      $('already').classList.remove('hide');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }).catch(function () { /* poochhna na ho paaye to raasta khula rehna chahiye */ });
+  }
+
+  /* ── keyboard aur dock ────────────────────────────────────────────────── */
+  /*
+     iPhone par khulta keyboard `position: fixed` waali cheez ko upar dhakel
+     deta hai aur poora page tedha dikhne lagta hai - guest ko kahin bhi tap
+     karke use theek karna padta tha. Type karte waqt dock ki zarurat hai hi
+     nahi, isliye wo hat jaata hai aur keyboard band hote hi wapas aa jaata hai.
+  */
+  document.addEventListener('focusin', function (e) {
+    if (e.target.tagName === 'INPUT') document.body.classList.add('typing');
+  });
+  document.addEventListener('focusout', function (e) {
+    if (e.target.tagName === 'INPUT') setTimeout(function () {
+      if (document.activeElement.tagName !== 'INPUT') document.body.classList.remove('typing');
+    }, 60);
+  });
+
+  /* Photos guest ki apni hain, phir bhi: koi save, koi drag, koi long-press. */
+  document.addEventListener('contextmenu', function (e) {
+    if (e.target.closest('.shot, .strip, .banner-wrap')) e.preventDefault();
+  });
+  document.addEventListener('dragstart', function (e) {
+    if (e.target.tagName === 'IMG') e.preventDefault();
+  });
+
+  /* ── tell the couple ──────────────────────────────────────────────────── */
+  function tellThem() {
+    var n = (cfg && cfg.notify) || {};
+    var num = String(n.phone || '').replace(/\D/g, '');
+    if (!num) return;
+    var who = nameEl.value.trim();
+    var text = (n.text || 'I have just added my photos to your album.') + (who ? ' — ' + who : '');
+    window.open('https://wa.me/' + num + '?text=' + encodeURIComponent(text), '_blank', 'noopener');
+  }
+  $('tell').addEventListener('click', tellThem);
+  $('tell2').addEventListener('click', tellThem);
 
   /* ── picking ──────────────────────────────────────────────────────────── */
   function buildPips() {
@@ -508,24 +603,76 @@ h1{font-family:Fraunces,Georgia,serif;font-weight:700;font-variation-settings:"S
   });
   picker.addEventListener('drop', function (e) { if (detailsOk() && e.dataTransfer) take(e.dataTransfer.files); });
 
-  function take(list) {
-    var room = cap() - shots.length;
-    var pics = [].slice.call(list).filter(function (f) { return /^image\//.test(f.type); });
-    var skipped = [].slice.call(list).length - pics.length;
+  /**
+   * Kitni bhi chuno; jaayengi sirf sabse achhi 20.
+   *
+   * "Achhi" ka faisla content se nahi ho sakta - koi bhi browser ye nahi bata
+   * sakta ki kaunsi photo pyaari hai. Jo naapa ja sakta hai wo hai TASVEER KI
+   * GUNVATTA, aur uske do saaf sanket hain: kitne pixel hain, aur har pixel
+   * par kitne byte kharch hue. Screenshot, WhatsApp se aage bheji hui ghisi
+   * photo aur dhundhli photo - teenon in dono par neeche girti hain, aur
+   * camera se li hui asli photo upar aati hai. Yahi wo chhaanti hai jo asal me
+   * madad karti hai.
+   *
+   * Chunne ka kram bhi yaad rakha jaata hai, taaki barabari par wahi jeete jo
+   * guest ne pehle chuni thi.
+   */
+  function score(s) {
+    var px = s.w * s.h;
+    if (!px) return s.file.size;                  // naap nahi mili - size hi sahi
+    var bpp = s.file.size / px;                   // detail ka pata isi se chalta hai
+    return Math.sqrt(px) * Math.min(bpp, 1.2);
+  }
 
-    if (room <= 0) {
-      say('That is 20 photos', 'Send these first — you can start again straight afterwards for the rest.');
+  function measure(s) {
+    return new Promise(function (done) {
+      var im = new Image();
+      im.onload = function () { s.w = im.naturalWidth; s.h = im.naturalHeight; done(); };
+      im.onerror = function () { s.w = s.h = 0; done(); };
+      im.src = s.url;
+    });
+  }
+
+  function take(list) {
+    var all = [].slice.call(list);
+    var pics = all.filter(function (f) { return /^image\//.test(f.type); });
+    var skipped = all.length - pics.length;
+    if (!pics.length) {
+      if (skipped) say('Nothing to send', 'Those files are not photos.');
       return;
     }
-    pics.slice(0, room).forEach(function (f) {
-      shots.push({ file: f, url: URL.createObjectURL(f), state: 'ready', dev: 0, sent: 0, order: shots.length + 1 });
+
+    var fresh = pics.map(function (f, i) {
+      return { file: f, url: URL.createObjectURL(f), state: 'ready', dev: 0, sent: 0, pick: shots.length + i };
     });
-    if (pics.length > room) {
-      say('Only the first ' + room + ' were added', 'Twenty photos is the limit for one go. Send these, then choose the rest.');
-    } else if (skipped) {
-      say(skipped + (skipped === 1 ? ' file was skipped' : ' files were skipped'), 'Only photos can be sent.');
-    } else { clearSay(); }
-    draw(); tally(); refresh();
+    var pool = shots.filter(function (s) { return s.state !== 'done'; }).concat(fresh);
+    var kept = shots.filter(function (s) { return s.state === 'done'; });
+
+    // Naap lene ke baad hi chhaanti ho sakti hai, aur naapne me ek pal lagta hai.
+    Promise.all(fresh.map(measure)).then(function () {
+      var room = Math.max(0, cap() - kept.length);
+      var dropped = [];
+      if (pool.length > room) {
+        pool.sort(function (a, b) { return score(b) - score(a) || a.pick - b.pick; });
+        dropped = pool.slice(room);
+        pool = pool.slice(0, room);
+        pool.sort(function (a, b) { return a.pick - b.pick; });   // guest ka apna kram wapas
+      }
+      dropped.forEach(function (s) { URL.revokeObjectURL(s.url); });
+
+      shots = kept.concat(pool);
+      shots.forEach(function (s, k) { s.order = k + 1; });
+
+      if (dropped.length) {
+        say('Keeping your best ' + room,
+            'You chose ' + (kept.length + pool.length + dropped.length) + '. We kept the ' + room +
+            ' sharpest, largest ones and set the rest aside.');
+      } else if (skipped) {
+        say(skipped + (skipped === 1 ? ' file was skipped' : ' files were skipped'), 'Only photos can be sent.');
+      } else { clearSay(); }
+
+      draw(); tally(); refresh();
+    });
   }
 
   function remove(i) {
@@ -756,25 +903,17 @@ h1{font-family:Fraunces,Georgia,serif;font-weight:700;font-variation-settings:"S
       var im = document.createElement('img'); im.src = s.url; im.alt = '';
       w.appendChild(im); strip.appendChild(w);
     });
-    $('finishText').textContent = n === 1
-      ? 'Your photo is in the family album.'
-      : 'All ' + n + ' photos are in the family album.';
+    var couple = (cfg && cfg.title) || 'the couple';
+    $('finishText').textContent = (n === 1
+      ? 'Your photo is in the album.'
+      : 'All ' + n + ' photos are in the album.') + ' ' + couple + ' will see them.';
+    $('tellWord').textContent = 'Tell ' + couple.replace(/ & /g, ' and ');
     $('main').classList.add('hide'); $('dock').classList.add('hide');
     $('finish').classList.remove('hide');
     window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Blob URL yahin tak zinda rakhe gaye - success ki patti inhi par khadi
+    // hai, pehle chhod dete to wo khaali dikhti.
   }
-
-  $('again').addEventListener('click', function () {
-    // Purane blob URL sirf ab chhode jaate hain - success ki patti unhi par
-    // khadi thi, aur pehle chhod dete to woh khaali dikhti.
-    shots.forEach(function (s) { URL.revokeObjectURL(s.url); });
-    shots = [];
-    $('roll').textContent = ''; $('strip').textContent = '';
-    $('finish').classList.add('hide');
-    $('main').classList.remove('hide'); $('dock').classList.remove('hide');
-    clearSay(); tally(); refresh();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
 
   refresh();
 })();
